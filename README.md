@@ -2,12 +2,12 @@
 Introduction
 ------------
 
-The FITMAN “Unstructured and Social Data Analytics” (U-SDA) Specific Enabler (FITMAN-Anlzer) aims at extracting unstructured data from selected social media platforms and web resources and at turning such user-generated content to knowledge to be used for the benefit of any manufacturing stakeholder. 
+The FITMAN “Unstructured and Social Data Analytics” Specific Enabler (FITMAN-Anlzer) aims at extracting unstructured data from selected social media platforms and web resources and at turning such user-generated content to knowledge to be used for the benefit of any manufacturing stakeholder. 
 It is responsible for:
 
 >1. Acquiring information based on predefined keywords and / or accounts / pages,
 2. Filtering relevant information (i.e. removing keywords and URLs),
-3. Running opinion mining and trend analysis techniques (based on the SVM algorithm) and
+3. Running opinion mining and trend analysis techniques (based on Support Vector Machines) and
 4. Presenting the emerging topics, sentiments and trends in an interactive way through intuitive visualizations 
 (i.e. dashboards, tree maps, charts, galleries)..
 
@@ -18,7 +18,7 @@ In both cases, the user is prompted to provide the necessary settings and inform
 
 The period during which data are collected may span from the past to the future according to the restrictions imposed by the social media platforms APIs and the user preferences. In general, the whole procedure of collecting data is repeated periodically, which eventually affects the system scalability capabilities; the more frequent the crawling process on data and the processing of them is, the less scalable the U-SDA SE becomes. By default, Twitter data are updated almost real time, whereas Facebook retrieval runs once a day. 
 
-Upon analyzing the gathered information for every query, the U-SDA SE visualizes the topics identified from specific social media platforms and web resources, gives a trending line and also the *sentiment indicator* for every topic identified. The users may also save the queries they have executed, in order to view the updated results whenever needed. The U-SDA SE is also based on the Anlzer engine and specifications from  internal research activities of the DSSLab, NTUA and the knowledge gained through the *PADGETS FP7 Project*,  which is an open source implementation of social media publishing, opinion mining and sentiment analysis components.
+Upon analyzing the gathered information for every query, Anlzer SE visualizes the topics identified from specific social media platforms and web resources, gives a trending line and also the *sentiment indicator* for every topic identified. The users may also save the queries they have executed, in order to view the results whenever needed. 
 
 -----------------
 SPECIAL THANKS
@@ -69,3 +69,4 @@ Usage Example
 
 Anlzer is a web platform. For detailed usage examples and application screenshots, please visit
 http://catalogue.fitman.atosresearch.eu/enablers/documentation
+You may also find some screenshots and getting started examples [here](./UIapp/README.md)
