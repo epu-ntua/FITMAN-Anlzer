@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+<h1>{{ object.name }}</h1>
+<p>Published: {{ object.pub_date|date }}</p>
+{% for permission in object.permissions %}
+    <li>{{ permission.name }}</li>
+{% empty %}
+    <li>No groups yet.</li>
+{% endfor %}
+<p>Date: {{ now|date }}</p>

@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block extra_header %}
+
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function () {
+        $('#table').dataTable({
+            "iDisplayLength": 25,
+            "bJQueryUI": true,
+            "sPaginationType": "full_numbers",
+            "aaSorting" : [[6, 'asc']],
+            "aaData": [
+                {% for query in content %}
+                    ["<a href=\"queries/{{ query.id }}\">{% if query.Name %}{{ query.Name }}{% else %}--no name--{% endif %}</a>", "{{ query.Keywords }}", "{{ query.Usernames }}","{{ query.Created_by }}", "{{ query.From }}", "{{ query.To }}", "{{ query.Created }}"],
+                {% endfor %}
+
+            ],
+            "aoColumns": [
+                {% for header in headers %}
+                    { "sTitle": "{{header}}" },
+                {% endfor %}
+            ]
+        });
+    });
+</script>
+
+{% endblock %}
+
+{% block body %}
+    {% if message %}
+        <div class="row">
+            <div class="padded aligncenter bordered" style="color: green;"><i class="fa fa-flag"></i> {{ message }}</div>
+        </div>
+    {% endif %}
+<div class="row">
+    <div class="container">
+        <div class="span12">
+            <a href="/create_query" class="btn btn-alt pull-right"><i class="fa fa-edit"></i> Create report</a>
+        </div>
+    </div>
+</div>
+</div>
+<div class="row">
+<!-- Responsive table -->
+<div class="container">
+    <!-- Four columns -->
+    <h2 class="brand pull-left">Your reports</h2>
+    <hr width="100%">
+    <div class="row">
+        <table id="table">
+            <thead class="nav"></thead>
+            <tbody></tbody>
+            <tfoot></tfoot>
+        </table>
+
+        <!-- /.table-queries -->
+    </div>
+
+    <!-- /.row -->
+</div>
+<!-- /.container -->
+</div>
+
+{% endblock %}

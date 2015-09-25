@@ -1,0 +1,211 @@
+{% extends "base.html" %}
+
+{% block title %}New query{% endblock %}
+
+
+{% block extra_header %}
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<script>
+    $(function() {
+        $( "#datepicker_from").datepicker();
+        $( "#datepicker_to" ).datepicker();
+    });
+</script>
+
+    <script type="text/javascript" charset="utf-8">
+        $( document ).ready(function() {
+            count=0;
+
+            $('#add').on('click', function() {
+                console.log ( this.name + " : "+this.value ); // or $(this).val()
+                $('#more-prop').append( '<div class="row">'+
+                        '<div class="span3 alignright"> <span class="label">' +
+                            '<input type="text" name="prop-name-'+count+'" placeholder="category name" >' +
+                        '</span></div>' +
+                    '<div class="span5"> <span class="text-left">' +
+                        '<textarea name="prop-value-'+count+'" class="cform-textarea" cols="40" rows="3" placeholder="properties"></textarea>' +
+                        '</span></div>' +
+                    '</div>'
+                )
+                count++;
+            });
+        });
+    </script>
+
+{% endblock %}
+
+{% block body %}
+
+<!--******************** Contact Section ********************-->
+<section id="portfolio" class="single-page scrollblock" xmlns="http://www.w3.org/1999/html">
+    <div class="container">
+        <h2>New report</h2>
+        <hr width="100%">
+        <div class="row">
+            <div class="span12">
+                <div class="cform" id="theme-form">
+                    <form action="#" method="post" class="cform-form">
+                        {% csrf_token %}
+                        <!-- query name-->
+                        <div class="row">
+                            <div class="span2 alignright"> <span class="label-important">
+                                    <label>Name*: </label>
+                                </span></div>
+                            <div class="span6"> <span class="text-left">
+                                    <textarea id="query_name" name="query_name" class="cform-textarea" cols="40" rows="1"
+                                              placeholder="e.g. My new query for products"
+                                              title="Give a name to the querr" required="true"></textarea>
+                                </span></div>
+                        </div>
+                        <!-- keywords-->
+                        <div class="row">
+                            <div class="span2 alignright"> <span class="label-important">
+                                    <label>Keywords and/or Hashtags: </label>
+                                </span></div>
+                            <div class="span6"> <span class="text-left">
+                                    <textarea id="keywords" name="keywords" class="cform-textarea" cols="40" rows="3"
+                                              placeholder="e.g. shoes, furniture, smartphones"
+                                              title="Fill in the keywords"></textarea>
+                                </span></div>
+                            <div class="span4"> <span class="label-info">
+                                    <label>The system will search for documents that contain any of the defined keywords and hashtags. The search expands to all documents (i.e. from both Facebook and Twitter)</label>
+                                </span></div>
+                        </div>
+                        <!-- Brands-->
+                        <div class="row">
+                            <div class="span2 alignright"> <span class="label-important">
+                                    <label>Brands: </label>
+                                </span></div>
+                            <div class="span6"> <span class="text-left">
+                                    <textarea id="brands" name="brands" class="cform-textarea" cols="40" rows="3"
+                                              placeholder="e.g. IKEA, Nike"
+                                              title="Choose the brands to search for"></textarea>
+                                </span></div>
+                            <div class="span4"> <span class="label-info">
+                                    <label>Choose brand names to be included in the query. This will add one extra tab in
+                                        your results, organizing the retrieved documents and statistics according to the provided values.</label>
+                                </span></div>
+                        </div>
+                        <!-- End: Brands-->
+                        <!-- Twitter Accounts-->
+                        <div class="row">
+                            <div class="span2 alignright"> <span class="label-important">
+                                    <label>Twitter accounts: </label>
+                                </span></div>
+                            <div class="span6"> <span class="text-left">
+                                    <textarea id="twitter" name="twitter" class="cform-textarea" cols="40" rows="3"
+                                              placeholder="@username"
+                                              title="Focus on specific Twitter accounts"></textarea>
+                                </span></div>
+                            <div class="span4"> <span class="label-info">
+                                    <label>Focus on specific Twitter accounts</label>
+                                </span></div>
+                        </div>
+                        <!-- End: Twitter Accounts-->
+
+                        <!-- Facebook Accounts-->
+                        <div class="row">
+                            <div class="span2 alignright"> <span class="label-important">
+                                    <label>Facebook accounts: </label>
+                                </span></div>
+                            <div class="span6"> <span class="text-left">
+                                    <textarea id="facebook" name="facebook" class="cform-textarea" cols="40" rows="3"
+                                              placeholder="page username"
+                                              title="Focus on specific Facebook accounts"></textarea>
+                                </span></div>
+                            <div class="span4"> <span class="label-info">
+                                    <label>Focus on specific Facebok pages</label>
+                                </span></div>
+                        </div>
+                        <!-- End: Twitter Accounts-->
+
+                        <!-- Datapicker-->
+                        <div class="row">
+                            <div class="span2 alignright"> <span class="text-right">
+                                    <label>Date from*: </label>
+                                </span></div>
+                            <div class="span2"> <span class="text-left">
+                                    <input id="datepicker_from" type="text" name="datepicker_from" placeholder="Date from" required>
+                                </span></div>
+
+                            <div class="span2 alignright"> <span class="text-right">
+                                    <label>Date to*: </label>
+                                </span></div>
+
+                            <div class="span2"> <span class="text-center">
+                                    <input id="datepicker_to" type="text" name="datepicker_to" placeholder="Date to" required>
+                                </span></div>
+                            <div class="span4">
+                            </div>
+
+                        </div>
+                        <!-- End: Datapicker-->
+
+                        <div class="row">
+                            <div class="span2 alignright"> <span class="text-right">
+                                    <label>Type of query*: </label>
+                                </span></div>
+                            <div class="span6"> <span class="text-left">
+                                <input type="radio" name="query_logic" value="AND" checked>AND
+                                <input type="radio" name="query_logic" value="OR">OR
+                            </span></div>
+                            <div class="span4"> <span class="label-info">
+                                    <label>Choose between AND and OR for the way different categories (i.e. the predefined "Brands" and any extra you may choose to add in the "Add properties" section below) are related</label>
+                                </span></div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="span2 alignright"> <span class="text-right">
+                                    <label>Select language*: </label>
+                                </span></div>
+                            <div class="span6"> <span class="text-left">
+                                <select name ="lan">
+                                   <option value = "en" selected>en</option>
+                                   <option value = "es">es</option>
+                                   <option value = "all">all</option>
+                                </select>
+                            </span></div>
+                        </div>
+
+
+                        <div class="row"><br></div>
+
+                        <div id="more-prop"></div>
+
+                        <!-- Add new row-->
+                        <div id="new-rows"></div>
+
+                        <div class="row">
+                            <div class="span2 alignright"></div>
+                            <div class="span6">
+                                <a id="add" class="bar-info">Add properties
+                                <label title="Here you can add more properties like the 'Brands' field above and also define the desired values for this report. You may add for example a 'colours' property and provide values 'red,blue'. The visualization of the report's results will also include the 'colours' property as an extra comparison axis. Not sure what this means?Why don't you try it and see if it suits your needs?">
+                                <i>(What is this?)</i>
+                                    </label>
+                                </a>
+                            </div>
+
+                        </div>
+                        <!-- End add new row -->
+
+
+                        <div class="row"><br></div>
+
+                        <div>
+                            <input type="submit" value="Run" class="cform-submit pull-right">
+                        </div>
+                        <div class="cform-response-output"></div>
+                    </form>
+                </div>
+            </div>
+            <!-- ./span12 -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container -->
+</section>
+
+
+{% endblock %}

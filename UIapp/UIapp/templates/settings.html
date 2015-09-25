@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block title %}Project settings{% endblock %}
+
+{% block menu %}
+    <li xmlns="http://www.w3.org/1999/html"><a title="ettings" href="/settings">Project setup</a></li>
+    <li xmlns="http://www.w3.org/1999/html"><a title="training" href="/train">Training</a></li>
+    <li xmlns="http://www.w3.org/1999/html"><a title="search" href="/search">Free Search</a></li>
+<li><a title="logout" href="/logout">Logout</a></li>
+{%  endblock%}
+
+{% block extra_header %}
+    <!--link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <script>
+        $(function() {
+            $( "#datepicker_from").datepicker();
+            $( "#datepicker_to" ).datepicker();
+        });
+    </script-->
+{% endblock %}
+
+{% block body %}
+
+    <!--******************** Contact Section ********************-->
+    <section id="portfolio" class="single-page scrollblock" xmlns="http://www.w3.org/1999/html">
+        <div class="container">
+            <h2>Update your project settings</h2>
+            <hr width="100%">
+            <div class="row">
+                <div class="row">
+               {% if messages %}
+{% for message in messages %}
+{% if message.tags == "error" %} <div class="alert alert-danger">{{ message }}</div>{% endif %}
+ {% if message.tags == "success" %} <div class="alert alert-success">{{ message }}</div>{% endif %}
+{% endfor %}
+           {% endif %}
+
+           </div>
+                <div class="span12">
+                    <div class="cform" id="theme-form">
+                        <form action="" method="post" class="cform-form">
+                            {% csrf_token %}
+                            <!-- twitter-->
+                            <div class="row">
+                                <div class="span2"> <span class="label-important">
+                                    <label>Twitter Accounts: </label>
+                                </span></div>
+                                <div class="span6"> <span class="text-left">
+                                    <textarea name="twitter" type="text"
+                                           title="Update the username">{{ twitter }}</textarea>
+                                </span></div>
+                                <div class="span4"><span class="label-info">
+                                    <label>Twitter accounts to be tracked</label>
+                                </span></div>
+                            </div>
+                            <!-- facebook-->
+                            <div class="row">
+                                <div class="span2"> <span class="label-important">
+                                    <label>Facebook: </label>
+                                </span></div>
+                                <div class="span6"> <span class="text-left">
+                                    <textarea name="facebook" type="text"
+                                           title="Update the facebook pages" >{{ facebook }}</textarea>
+                                </span></div>
+                                <div class="span4"><span class="label-info">
+                                    <label>Facebook Pages to collect comments</label>
+                                </span></div>
+                            </div>
+                            <!-- hashtags-->
+                            <div class="row">
+                                <div class="span2"> <span class="label-important">
+                                    <label>Hashtags: </label>
+                                </span></div>
+                                <div class="span6"> <span class="text-left">
+                                    <textarea name="keywords" type="text"
+                                           title="Update the hashtags">{{ keywords }}</textarea>
+                                </span></div>
+                                <div class="span4"><span class="label-info">
+                                    <label>Terms used to collect data</label>
+                                </span></div>
+                            </div>
+
+
+                            <div>
+                                <div class="span3"></div>
+                                <div class="span6">
+                                    <input type="submit" value="save" class="cform-submit pull-right">
+                                </div>
+                                <div class="span3"></div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+                <!-- ./span12 -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container -->
+    </section>
+
+
+{% endblock %}

@@ -1,0 +1,127 @@
+{% extends "base-welcome.html" %}
+
+{% block title %}First train{% endblock %}
+
+{% block menu %}
+    <!-- no menu -->
+{%  endblock%}
+
+{% block extra_header %}
+    <!--link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script-->
+    <script>
+        $( document ).ready(function() {
+            $('select').on('change', function() {
+                path_to_download="/download-csv?lan="+this.value;
+                $("#download_csv").attr("href", path_to_download);
+            });
+             $("#upload").change(function() {
+                $('input[type="submit"]').removeAttr('disabled');
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block body %}
+    <section id="portfolio" class="single-page scrollblock" xmlns="http://www.w3.org/1999/html">
+        <div class="container aligncenter">
+            <img src="/s/img/step2.png" height="500px" width="500px"/>
+            <div class="row">
+                <div class="span4"></div>
+                <div class="span4">
+                    <label class="aligncenter"><b>Training makes it better!</b><br>
+                        Once you have set up your project, wait some hours for the Anlzer to get the first results. Then you may train him to serve you better, with more intelligence. <br/><br/>
+                        <i>Forgot to include something on step 1? You can still make changes later through the project settings.</i></label>
+                </div>
+                <div class="span4"></div>
+            </div>
+            <div class="row">
+               {% if messages %}
+{% for message in messages %}
+{% if message.tags == "error" %} <div class="alert alert-danger">{{ message }}</div>{% endif %}
+ {% if message.tags == "success" %} <div class="alert alert-success">{{ message }}</div>{% endif %}
+{% endfor %}
+           {% endif %}
+
+           </div>
+        </div>
+
+        <div class="container">
+                    <hr width="100%">
+                    <div class="row">
+                        <div class="cform" id="theme-form">
+                            <form action="" method="post" class="cform-form" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="row"><br></div>
+                            <div class="row">
+                                <div class="span4 alignright"> <span class="text-right">
+                                        <label>Select language: </label>
+                                    </span></div>
+                                <div class="span6"> <span class="text-left">
+                                    <select name ="lan">
+                                       <option value = "en" selected>English</option>
+                                       <option value = "es">Spanish</option>
+                                    </select>
+                                </span></div>
+                            </div>
+                                <div class="row"><br></div>
+                                <!-- File Upload-->
+                                <div class="row">
+                                    <div class="span4"> <span class="label-important alignright">
+                                        <label>File Upload: </label>
+                                    </span></div>
+                                    <div class="span4 aligncenter"> <span class="text-left">
+                                        <input type="file" id="upload" required name="file">
+                                    </span></div>
+                                    <div class="span4"> <span class="label-info">
+                                        <label>Upload a .csv file to train the system</label>
+                                    </span></div>
+                                </div>
+                                <div class="row"><br></div>
+                                <!-- Info-->
+                                <div class="row">
+                                    <div class="span4"> <span class="label-important alignright">
+                                        <label>A .csv example: </label>
+                                    </span></div>
+                                    <div class="span4">
+                                        <textarea name="keyrwords" class="cform-textarea" cols="50" rows="5"
+                                                  placeholder="" title="csv. example" disabled="true">I feel wonderful in Disneyland, positive
+I feel sick on the roller coaster :(, negative
+Waiting for hours in the queue, negative
+Yahoo!! This is Disneyland!!, positive
+                                        </textarea>
+                                    </div>
+                                </div>
+                                <!-- Download File-->
+
+                                <div class="row">
+                                    <div class="span4"> <span class="label-important alignright">
+                                    </span></div>
+                                    <div class="span4 aligncenter"> <span class="text-left">
+                                    <a id="download_csv" href="/download-csv?lan=en"><i class="fa fa-download"></i> Download .csv</a>
+                                    </span></div>
+                                    <div class="span4"> <span class="label-info">
+                                        <label>Download an example .csv</label>
+                                    </span></div>
+                                </div>
+
+                                <div class="row"><br></div>
+
+
+                                <div>
+                                    <div class="span3"></div>
+                                    <div class="span6">
+                                        <input type="button" value="Skip" class="cform-button pull-left" onClick='window.location="/welcome-report";'>
+                                        <input type="submit" value="Upload>" class="cform-submit pull-right" disabled>
+                                    </div>
+                                    <div class="span3"></div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+        <!-- /.container -->
+
+    </section>
+
+{% endblock %}

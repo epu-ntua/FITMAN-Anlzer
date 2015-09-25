@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Contact{% endblock %}
+
+
+{% block extra_header %}
+{% endblock %}
+
+
+{% block body %}
+    <!--******************** Contact Section ********************-->
+    <section id="services" class="single-page scrollblock">
+        <div class="container">
+            <div class="align"><i class="fa fa-envelope"></i></div>
+            <h1>Contact us now!</h1>
+
+            <div class="row">
+                <div class="span12">
+                    <div class="cform" id="email-form">
+                        <form action="MAILTO:fitman@epu.ntua.gr" method="post" enctype="text/plain">
+                    <div class="row">
+                        <div class="span6"> <span class="your-name">
+                                <input type="text" name="your-name" placeholder="Your Name" class="cform-text" size="40" title="your name">
+                        </span></div>
+                        <div class="span6"> <span class="your-email">
+                                <input type="text" name="your-email" placeholder="Your Email" class="cform-text" size="40"title="your email">
+                            </span></div>
+                   </div>
+                   <div class="row">
+                                <div class="span6"> <span class="company">
+                    <input type="text" name="company" placeholder="Your Company" class="cform-text" size="40"
+                           title="company">
+                    </span></div>
+                                <div class="span6"> <span class="website">
+                    <input type="text" name="website" placeholder="Your Website" class="cform-text" size="40"
+                           title="website">
+                    </span></div>
+                            </div>
+                            <div class="row">
+                                <div class="span12"> <span class="message">
+                    <textarea name="message" class="cform-textarea" cols="40" rows="10"
+                              title="drop us a line."></textarea>
+                    </span></div>
+                            </div>
+                            <div>
+                                <input type="submit" value="Send message" class="cform-submit pull-left">
+                            </div>
+                            <div class="cform-response-output"></div>
+                        </form>
+                    </div>
+                </div>
+                <!-- ./span12 -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container -->
+    </section>
+
+{% endblock %}

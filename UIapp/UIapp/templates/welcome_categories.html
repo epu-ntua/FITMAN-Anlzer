@@ -1,0 +1,127 @@
+{% extends "base-welcome.html" %}
+
+{% block title %}Setup project{% endblock %}
+
+{% block menu %}
+    <!-- no menu -->
+{%  endblock%}
+
+{% block extra_header %}
+    <!--link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <script>
+        $(function() {
+            $( "#datepicker_from").datepicker();
+            $( "#datepicker_to" ).datepicker();
+        });
+    </script-->
+{% endblock %}
+
+{% block body %}
+    <section id="portfolio" class="single-page scrollblock" xmlns="http://www.w3.org/1999/html">
+        <div class="container aligncenter">
+            <img src="/s/img/step1.png" height="500px" width="500px"/>
+            <div class="row">
+                <div class="span4"></div>
+                <div class="span4">
+                    <label class="aligncenter"><b>First you need to set up your project!</b> <br> Provide the terms to search for, the Twitter accounts to follow and the Facebook pages to track</label>
+                </div>
+                <div class="span4"></div>
+            </div>
+        </div>
+    <!--******************** choose categories ********************-->
+
+        <div class="container">
+            <hr width="100%">
+            <div class="row">
+             <div class="row">
+               {% if messages %}
+{% for message in messages %}
+{% if message.tags == "error" %} <div class="alert alert-danger">{{ message }}</div>{% endif %}
+ {% if message.tags == "success" %} <div class="alert alert-success">{{ message }}</div>{% endif %}
+{% endfor %}
+           {% endif %}
+
+           </div>
+                <div class="span12">
+                    <div class="cform" id="theme-form">
+                        <form action="/welcome-categories" method="post" class="cform-form">
+                            {% csrf_token %}
+                            {% if message %}
+                                <div class="row">
+                                    <div class="padded aligncenter bordered" style="color: red;"><i class="fa fa-warning"></i> {{ message }}</div>
+                                </div>
+                            {% endif %}
+                            <!-- project-->
+                            <div class="row">
+                                <div class="span4"></div>
+                                <div class="span1"> <span class="label-important">
+                                    <label>Project name*: </label>
+                                </span></div>
+                                <div class="span3"> <span class="text-left">
+                                    <input name="project" type="text"
+                                           placeholder="e.g. myProjectName"
+                                           title="Choose a name for your project" required>
+                                </span></div>
+                                <div class="span4"></div>
+                            </div>
+                            <!-- twitter-->
+                            <div class="row">
+                                <div class="span4"></div>
+                                <div class="span1"> <span class="label-important">
+                                    <label>Twitter Accounts: </label>
+                                </span></div>
+                                <div class="span3"> <span class="text-left">
+                                    <textarea name="twitter" type="text"
+                                              placeholder="e.g. ikea (or @ikea), nikerunning"
+                                              title="Fill in the username"></textarea>
+                                </span></div>
+                                <div class="span4"></div>
+                            </div>
+                            <!-- facebook-->
+                            <div class="row">
+                                <div class="span4"></div>
+                                <div class="span1"> <span class="label-important">
+                                    <label>Facebook: </label>
+                                </span></div>
+                                <div class="span3"> <span class="text-left">
+                                    <textarea name="facebook" type="text"
+                                              placeholder="e.g. ikea-official, nikerunning-greece"
+                                              title="Fill in the facebook pages" ></textarea>
+                                </span></div>
+                                <div class="span4"></div>
+                            </div>
+                            <!-- hashtags-->
+                            <div class="row">
+                                <div class="span4"></div>
+                                <div class="span1"> <span class="label-important">
+                                    <label>Hashtags: </label>
+                                </span></div>
+                                <div class="span3"> <span class="text-left">
+                                    <textarea name="hashtags" type="text"
+                                              placeholder="e.g. furniture, shoes, #shoes clothes, holidays"
+                                              title="Fill in the Twitter hashtags or Twitter terms you would like to search"></textarea>
+                                </span></div>
+                                <div class="span4"></div>
+                            </div>
+
+                            <div>
+                                <div class="span3"></div>
+                                <div class="span6">
+                                    <input type="button" value="< Back" class="cform-button pull-left" onClick="history.go(-1);return true;">
+                                    <input type="submit" value="Create Project" class="cform-submit pull-right">
+                                </div>
+                                <div class="span3"></div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- ./span12 -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container -->
+    </section>
+
+
+{% endblock %}

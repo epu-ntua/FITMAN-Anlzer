@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block title %}Training{% endblock %}
+
+{% block menu %}
+    <li xmlns="http://www.w3.org/1999/html"><a title="ettings" href="/settings">Project setup</a></li>
+    <li xmlns="http://www.w3.org/1999/html"><a title="training" href="/train">Training</a></li>
+    <li xmlns="http://www.w3.org/1999/html"><a title="search" href="/search">Free Search</a></li>
+<li><a title="logout" href="/logout">Logout</a></li>
+{%  endblock%}
+
+{% block extra_header %}
+     <script>
+        $( document ).ready(function() {
+            $('select').on('change', function() {
+                path_to_download="/download-csv?lan="+this.value;
+                $("#download_csv").attr("href", path_to_download);
+            });
+             $("#upload").change(function() {
+                $('input[type="submit"]').removeAttr('disabled');
+            });
+        });
+    </script>
+
+{% endblock %}
+
+{% block body %}
+
+    <!--******************** Contact Section ********************-->
+<section id="portfolio" class="single-page scrollblock" xmlns="http://www.w3.org/1999/html">
+       <div class="container">
+           <h2>Train Anlzer to fit your industry</h2>
+                    <hr width="100%">
+           <div class="row">
+               {% if messages %}
+{% for message in messages %}
+{% if message.tags == "error" %} <div class="alert alert-danger">{{ message }}</div>{% endif %}
+ {% if message.tags == "success" %} <div class="alert alert-success">{{ message }}</div>{% endif %}
+{% endfor %}
+           {% endif %}
+
+           </div>
+                    <div class="row">
+                        <div class="cform" id="theme-form">
+                            <form action="" method="post" class="cform-form" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="row"><br></div>
+                            <div class="row">
+                                <div class="span4 alignright"> <span class="text-right">
+                                        <label>Select language: </label>
+                                    </span></div>
+                                <div class="span6"> <span class="text-left">
+                                    <select name ="lan">
+                                       <option value = "en" selected>English</option>
+                                       <option value = "es">Spanish</option>
+                                    </select>
+                                </span></div>
+                            </div>
+                                <div class="row"><br></div>
+                                <!-- File Upload-->
+                                <div class="row">
+                                    <div class="span4"> <span class="label-important alignright">
+                                        <label>File Upload: </label>
+                                    </span></div>
+                                    <div class="span4 aligncenter"> <span class="text-left">
+                                        <input type="file" id="upload" required name="file">
+                                    </span></div>
+                                    <div class="span4"> <span class="label-info">
+                                        <label>Upload a .csv file to train the system</label>
+                                    </span></div>
+                                </div>
+                                <div class="row"><br></div>
+                                <!-- Info-->
+                                <div class="row">
+                                    <div class="span4"> <span class="label-important alignright">
+                                        <label>A .csv example: </label>
+                                    </span></div>
+                                    <div class="span4">
+                                        <textarea name="keyrwords" class="cform-textarea" cols="50" rows="5"
+                                                  placeholder="" title="csv. example" disabled="true">I feel wonderful in Disneyland, positive
+I feel sick on the roller coaster :(, negative
+Waiting for hours in the queue, negative
+Yahoo!! This is Disneyland!!, positive
+                                        </textarea>
+                                    </div>
+                                </div>
+                                <!-- Download File-->
+
+                                <div class="row">
+                                    <div class="span4"> <span class="label-important alignright">
+                                    </span></div>
+                                    <div class="span4 aligncenter"> <span class="text-left">
+                                    <a id="download_csv" href="/download-csv?lan=en"><i class="fa fa-download"></i> Download .csv</a>
+                                    </span></div>
+                                    <div class="span4"> <span class="label-info">
+                                        <label>Download an example .csv</label>
+                                    </span></div>
+                                </div>
+
+                                <div class="row"><br></div>
+
+
+                                <div>
+                                    <div class="span3"></div>
+                                    <div class="span6">
+                                        <input type="submit" value="Upload" class="cform-submit pull-right" disabled>
+                                    </div>
+                                    <div class="span3"></div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+</section>
+
+{% endblock %}

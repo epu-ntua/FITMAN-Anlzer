@@ -1,0 +1,7 @@
+python-dateutil
+Django==1.6
+dj-static
+static
+wsgiref
+couchbase
+django-allauth

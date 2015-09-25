@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+<h1>Groups</h1>
+<ul>
+{% for group in object_list %}
+    <li>{{ group.pub_date|date }} - {{ group.name }}</li>
+{% empty %}
+    <li>No groups yet.</li>
+{% endfor %}
+</ul>

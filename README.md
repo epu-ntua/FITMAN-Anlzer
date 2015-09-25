@@ -69,4 +69,4 @@ Usage Example
 
 Anlzer is a web platform. For detailed usage examples and application screenshots, please visit
 http://catalogue.fitman.atosresearch.eu/enablers/documentation
-You may also find some screenshots and getting started examples [here](./UIapp/README.md)
+You may also find some screenshots and getting started examples [here](./UIapp/README.md).

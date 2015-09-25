@@ -1,0 +1,236 @@
+{% extends "base-welcome.html" %}
+
+{% block title %}Welcome Anlzer{% endblock %}
+
+
+
+{% block menu %}
+    <li><a title="signup" href="/signup">Sign Up</a></li>
+    <li><a title="services" href="#services">Services</a></li>
+    <li><a title="team" href="#team">Team</a></li>
+    <li><a title="contact" href="#contact">Contact</a></li>
+{%  endblock %}
+
+{% block extra_header %}
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+{% endblock %}
+
+
+{% block body %}
+
+<!-- ******************** HeaderWrap ********************-->
+<div id="headerwrap">
+    <header class="clearfix">
+        <h1><span>Anlzer</span> Unstructured and Social Data Specific Enabler</h1>
+<h4> {% if messages %}
+
+    {% for message in messages %}
+    <div class="alert alert-info"{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</div>
+    {% endfor %}
+{% endif %}
+</h4>
+
+        <div class="container">
+            <div class="row">
+                <div class="span12">
+                    <div class="cform" id="theme-form">
+                        <form action="/welcome" method="post" class="cform-form">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="span4">
+
+
+                                </div>
+                                <div class="span3">
+                                    <div class="aligncenter">
+                                        <input type="text" name="email" placeholder="Username" class="cform-text"
+                                               title="Email">
+                                    </div>
+                                    <div class="aligncenter">
+                                        <input type="password" name="password" placeholder="Password" class="cform-text"
+                                               size="40" title="company">
+                                    </div>
+                                    <!--div class="aligncenter">
+                                        <a class="" href="password_reset/recover/">Forgot password?</a>
+                                    </div-->
+                                </div>
+                                <div class="span2">
+                                    <div class="alignleft">
+                                        <input type="submit" name="login" value="login">
+                                        <!--button value="Login" class="btn">Login</button-->
+                                                <!--div class="aligncenter">
+                                                    <label class="checkbox"><input type="checkbox"><span>Remember me</span></label>
+                                                </div-->
+                                    </div>
+                                </div>
+                                <div class="span3"></div>
+
+
+                            </div>
+
+                            <div class="cform-response-output"></div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </header>
+</div>
+
+    <!--******************** Services Section ********************-->
+    <section id="services" class="single-page scrollblock">
+        <div class="container">
+            <div class="align"><i class="fa fa-cog"></i></div>
+            <h1>Services</h1>
+            <!-- Four columns -->
+            <div class="row">
+                <div class="span3">
+                    <div class="align"><i class="fa fa-facebook"></i><i class="fa fa-twitter"></i><i class="fa fa-rss"></i></div>
+                    <h2>Track accounts</h2>
+
+                    <p>Setup a new project, choose Facebook pages, Twitter accounts and hashtags/keywords you want to track and
+                    Alnzer will collect these open data. Have you changed your mind about the content to track? Change your project
+                    settings and see new results coming.</p>
+                </div>
+                <!-- /.span3 -->
+                <div class="span3">
+                    <div class="align"><i class="fa fa-smile-o"></i><i class="fa fa-frown-o"></i></div>
+                    <h2>Run sentiment analysis</h2>
+
+                    <p>On the collected data, Anlzer runs sentiment analysis to bring out new trends and user opinions.
+                    The Anlzer can be re-trained to fit your industry needs.</p>
+                </div>
+                <!-- /.span3 -->
+                <div class="span3">
+                    <div class="align"><i class="fa fa-bar-chart-o"></i></div>
+                    <h2>See live results</h2>
+
+                    <p>Want to identify trends? You can go through free search and see relative trends.</p>
+                </div>
+                <!-- /.span3 -->
+                <div class="span3">
+                    <div class="align"><i class="fa fa-clipboard"></i></div>
+                    <h2>Export reports</h2>
+
+                    <p>Create queries on the collected data, see diagrams and export reports to facilitate your decisions.</p>
+                </div>
+                <!-- /.span3 -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container -->
+    </section>
+    <hr>
+
+    <!--******************** Team Section ********************-->
+    <section id="team" class="single-page scrollblock">
+        <div class="container">
+            <div class="align"><i class="fa fa-group"></i></div>
+            <h1>Meet the team</h1>
+            <!-- Five columns -->
+            <!--div class="row">
+                <div class="span2 offset1">
+                    <div class="teamalign"><img class="team-thumb img-circle" src="s/img/team/mpetyx.png" alt=""></div>
+                    <h3>Michael Petychakis</h3>
+
+                    <div class="job-position">developer</div>
+                </div>
+                <div class="span2">
+                    <div class="teamalign"><img class="team-thumb img-circle" src="s/img/team/ebiril.png" alt=""></div>
+                    <h3>Evformia Biliri</h3>
+
+                    <div class="job-position">developer</div>
+                </div>
+                <div class="span2">
+                    <div class="teamalign"><img class="team-thumb img-circle" src="s/img/team/jos.png" alt=""></div>
+                    <h3>Iosif Alvertis</h3>
+
+                    <div class="job-position">web developer</div>
+                </div>
+                <div class="span2">
+                    <div class="teamalign"><img class="team-thumb img-circle" src="s/img/team/flamp.png" alt=""></div>
+                    <h3>Fenareti Lampathaki</h3>
+
+                    <div class="job-position">product manager</div>
+                </div>
+                <div class="span2">
+                    <div class="teamalign"><img class="team-thumb img-circle" src="s/img/team/skous.png" alt="sotiris koussouris"></div>
+                    <h3>Sotiris Koussouris</h3>
+
+                    <div class="job-position">product manager</div>
+                </div>
+            </div-->
+            <!-- /.row -->
+            <div class="row">
+                <div class="span10 offset1">
+                    <hr class="featurette-divider">
+                    <div class="featurette">
+                        <h2 class="featurette-heading">Want to know more? <span class="muted">| a little about us</span>
+                        </h2>
+
+                        <p>We are a team of researchers working on fancy semantic and sentiment technologies over social media. We do our research at DSSLab (Decision Support Systems laboratory) laboratory, in NTUA (National Technical University of Athens), while we work to ground our knowledge on handy tools to run our data analyses.</p>
+
+                        <p> Our goal is to create easy to use and useful tools to bring data technologies closer to industrial solutions. We love to share our work and get feedback, so do not hesitate to contact us in case you have any question or comment.</p>
+                    </div>
+                    <!-- /.featurette -->
+                    <hr class="featurette-divider">
+                </div>
+                <!-- .span10 -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container -->
+    </section>
+
+    <!--******************** Contact Section ********************-->
+    <section id="contact" class="single-page scrollblock">
+        <div class="container">
+            <div class="align"><i class="fa fa-envelope"></i></div>
+            <h1>Contact us now!</h1>
+
+            <div class="row">
+                <div class="span12">
+                    <div class="cform" id="email-form">
+                        <form action="MAILTO:fitman@epu.ntua.gr" method="post" enctype="text/plain">
+                            <div class="row">
+                                <div class="span6"> <span class="your-name">
+                    <input type="text" name="your-name" placeholder="Your Name" class="cform-text" size="40"
+                           title="your name">
+                    </span></div>
+                                <div class="span6"> <span class="your-email">
+                    <input type="text" name="your-email" placeholder="Your Email" class="cform-text" size="40"
+                           title="your email">
+                    </span></div>
+                            </div>
+                            <div class="row">
+                                <div class="span6"> <span class="company">
+                    <input type="text" name="company" placeholder="Your Company" class="cform-text" size="40"
+                           title="company">
+                    </span></div>
+                                <div class="span6"> <span class="website">
+                    <input type="text" name="website" placeholder="Your Website" class="cform-text" size="40"
+                           title="website">
+                    </span></div>
+                            </div>
+                            <div class="row">
+                                <div class="span12"> <span class="message">
+                    <textarea name="message" class="cform-textarea" cols="40" rows="10"
+                              title="drop us a line."></textarea>
+                    </span></div>
+                            </div>
+                            <div>
+                                <input type="submit" value="Send message" class="cform-submit pull-left">
+                            </div>
+                            <div class="cform-response-output"></div>
+                        </form>
+                    </div>
+                </div>
+                <!-- ./span12 -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container -->
+    </section>
+
+{% endblock %}

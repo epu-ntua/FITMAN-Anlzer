@@ -1,0 +1,91 @@
+{% extends "base-welcome.html" %}
+
+{% block title %}Signup{% endblock %}
+
+{% block menu %}
+<!-- no menu -->
+{%  endblock%}
+
+{% block extra_header %}
+<!--link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<script>
+    $(function() {
+        $( "#datepicker_from").datepicker();
+        $( "#datepicker_to" ).datepicker();
+    });
+</script-->
+{% endblock %}
+
+{% block body %}
+
+<!--******************** Contact Section ********************-->
+<section id="portfolio" class="single-page scrollblock" xmlns="http://www.w3.org/1999/html">
+    <div class="container">
+        <h2>Setup your account</h2>
+        <hr width="100%">
+        <div class="row">
+            <div class="span12">
+                <div class="cform" id="theme-form">
+                    <form action="#" method="post" class="cform-form">
+                        <!-- keywords-->
+                        <div class="row">
+                            <div class="span1"> <span class="label-important">
+                                    <label>Keywords*: </label>
+                                </span></div>
+                            <div class="span7"> <span class="text-left">
+                                    <textarea name="keyrwords" class="cform-textarea" cols="40" rows="3"
+                                              placeholder="e.g. shoes, furniture, smartphones"
+                                              title="Fill in the keywords" required></textarea>
+                                </span></div>
+                        </div>
+                        <!-- Brands-->
+                        <div class="row">
+                            <div class="span1"> <span class="label-important">
+                                    <label>Facebook Pages: </label>
+                                </span></div>
+                            <div class="span7"> <span class="text-left">
+                                    <textarea name="brands" class="cform-textarea" cols="40" rows="3"
+                                              placeholder="e.g. https://www.facebook.com/NikeRunningGreece"
+                                              title="Fill in the URLs"></textarea>
+                                </span></div>
+                            <div class="span4"> <span class="label-info">
+                                    <label>Choose the Facebook pages to collect comments from</label>
+                                </span></div>
+                        </div>
+                        <!-- End: Brands-->
+                        <!-- Twitter Accounts-->
+                        <div class="row">
+                            <div class="span1"> <span class="label-important">
+                                    <label>Twitter accounts: </label>
+                                </span></div>
+                            <div class="span7"> <span class="text-left">
+                                    <textarea name="twitter" class="cform-textarea" cols="40" rows="3"
+                                              placeholder="@username" title="Choose the Twitter accounts"></textarea>
+                                </span></div>
+                            <div class="span4"> <span class="label-info">
+                                    <label>Choose the Twitter Accounts to track</label>
+                                </span></div>
+                        </div>
+                        <!-- End: Twitter Accounts-->
+
+
+                        <div class="row"><br></div>
+
+                        <div>
+                            <INPUT Type="button" VALUE="Back" class="cform-submit pull-right" onClick="history.go(-1);return true;">
+                            <input type="submit" value="Next" class="cform-submit pull-right">
+                        </div>
+                        <div class="cform-response-output"></div>
+                    </form>
+                </div>
+            </div>
+            <!-- ./span12 -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container -->
+</section>
+
+
+{% endblock %}

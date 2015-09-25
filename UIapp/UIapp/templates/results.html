@@ -1,0 +1,422 @@
+{% extends "base.html" %}
+
+{% block title %}{{ query_name }}{% endblock %}
+
+{% block extra_header %}
+    <style>
+    .crop{
+        float:left;
+        margin:.5em 10px .5em 0;
+        overflow:hidden; /* this is important */
+        border:1px solid #ccc;
+        height: 100px;
+        width: 100px;
+    }
+        /* input values to crop the image: top, right, bottom, left */
+    .crop img{
+        margin:-20px -15px -40px -55px;
+    }
+</style>
+    <script type="text/javascript" charset="utf-8">
+    $(document).ready(function () {
+        $('#datatable').dataTable({
+            "bJQueryUI": true,
+            "sPaginationType": "full_numbers",
+            "aaSorting" : [[3, 'desc']],
+            "aaData": [
+                {% autoescape on %}
+                {% for message in response %}
+                    {% if message.doc.senti_tag == "positive" %}
+                        ["<select class=\"train\" name=\"{{ message.meta.id }}\"><option value=\"positive\" selected=true>positive</option><option value=\"negative\">negative</option><option value=\"neutral\" >neutral</option></select>","{{ message.doc.text|linebreaksbr }}", "{{ message.doc.user_screen_name }}","{{ message.doc.created_at}}"],
+                    {%  elif message.doc.senti_tag == "negative" %}
+                        ["<select class=\"train\" name=\"{{ message.meta.id}}\"><option value=\"positive\"  >positive</option><option value=\"negative\" selected=true >negative</option><option value=\"neutral\">neutral</option></select>","{{ message.doc.text|linebreaksbr }}", "{{ message.doc.user_screen_name }}","{{ message.doc.created_at}}"],
+                    {%  elif message.doc.senti_tag == "neutral" %}
+                        ["<select class=\"train\" name=\"{{ message.meta.id}}\"><option value=\"positive\"  >positive</option><option value=\"negative\" >negative</option><option value=\"neutral\" selected=true >neutral</option></select>","{{ message.doc.text|linebreaksbr }}", "{{ message.doc.user_screen_name }}","{{ message.doc.created_at}}"],
+                    {% else %}
+                        ["<select class=\"train\" name=\"{{ message.meta.id }}\"><option value=\"positive\">positive</option><option value=\"negative\" >negative</option><option value=\"neutral\">neutral</option><option value=\"na\" selected=true>n/a</option></select>","{{ message.doc.text|linebreaksbr }}", "{{ message.doc.user_screen_name }}","{{ message.doc.created_at}}"],
+                    {% endif %}
+                {% empty %}
+                    ["-","-", "-","-"]
+                {% endfor %}
+                {% endautoescape %}
+            ],
+            "aoColumns": [
+                { "sTitle": "Sentiment"},
+                { "sTitle": "Text"},
+                { "sTitle": "From"},
+                { "sTitle": "Datetime"}
+            ],
+            "aoColumnDefs": [
+                { "sWidth": "auto", "aTargets": [ 0 ] },
+                { "sWidth": "auto", "aTargets": [ 2 ] }
+            ]
+        });
+    });
+</script>
+
+
+
+
+    <!-- Treemap Chart-->
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+        google.load("visualization", "1", {packages: ["treemap"]});
+        google.setOnLoadCallback(drawChart);
+        function drawChart() {
+            // Create and populate the data table.
+            var data = google.visualization.arrayToDataTable([
+                ['Keyword', 'Parent', 'Number of appearance (size)', 'Sentiment(color)'],
+                ['All', null, 0, 0],
+                {% for category in categories %}
+                        ['{{ category.category }}', 'All', 0, 0],
+                    {% for property in category.properties %}
+                        ['{{ category.category }}:{{ property.name }}', '{{ category.category }}', {{ property.times }}, {{ property.sentiment}}],
+                    {% endfor %}
+                {% endfor %}
+            ]);
+
+            // Create and draw the visualization.
+            var tree = new google.visualization.TreeMap(document.getElementById('chart_div'));
+            tree.draw(data, {
+                minColor: '#C0C0C0',
+                midColor: '#B2D1B2',
+                maxColor: '#A5DF00',
+                height: 400,
+                headerHeight: 20,
+                fontColor: 'black',
+                showScale: true,
+                showTooltips:true,
+                useWeightedAverageForAggregation:true,
+                title:'Categories with the most positive effect'});
+        }
+    </script>
+
+    <!-- Piechart-->
+    <script type="text/javascript">
+        google.load("visualization", "1", {packages: ["corechart"]});
+        google.setOnLoadCallback(drawPie);
+        function drawPie() {
+            var data = google.visualization.arrayToDataTable([
+                ['Messages', 'Number'],
+                ['Positive', {{ positive }}],
+                ['Negative', {{ negative }}],
+                ['Neutral', {{ neutral }}]
+            ]);
+
+            var options = {
+                colors: [ '#A5DF00', '#FA8258', '#BDBDBD'],
+                width: 700,
+                height: 400,
+                backgroundColor: 'none',
+                is3D: true,
+                title: 'Overall sentiment of messages'
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+            chart.draw(data, options);
+        }
+    </script>
+
+
+    <!-- Visualization-->
+    <script type="text/javascript">
+      google.load('visualization', '1', {packages: ['corechart']});
+      google.setOnLoadCallback(drawVisualization);
+      function drawVisualization() {
+          // Create and populate the data table.
+          var data = google.visualization.arrayToDataTable([
+            ['Keyword', 'positive', 'negative', 'Properties' ,'Number of appearance (size)'],
+            {% for category in categories %}
+                    {% for property in category.properties %}
+                        ['{{ property.name }}', {{ property.positive}}, {{ property.negative }}, '{{ category.category }}',{{ property.times}}],
+                    {% endfor %}
+            {% endfor %}
+          ]);
+
+          var options = {
+              title: 'Positive & Negative Occurrences of Terms',
+              hAxis: {title: 'positive',  minValue:'-1'},
+              vAxis: {title: 'negative',  minValue:'-1'},
+            width: 1000,
+            height: 400,
+            backgroundColor: 'none',
+            bubble: {textStyle: {fontSize: 11}}
+          };
+
+          // Create and draw the visualization.
+          var chart = new google.visualization.BubbleChart(
+              document.getElementById('visualization'));
+          chart.draw(data, options);
+      }
+
+
+      google.setOnLoadCallback(drawVisualization);
+    </script>
+
+         <!-- word cloud-->
+        <link rel="stylesheet" type="text/css" href="http://visapi-gadgets.googlecode.com/svn/trunk/termcloud/tc.css"/>
+        <script type="text/javascript" src="http://visapi-gadgets.googlecode.com/svn/trunk/termcloud/tc.js"></script>
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <!--<script type="text/javascript">-->
+      <!--google.load("visualization", "1");-->
+      <!--google.setOnLoadCallback(draw);-->
+      <!--function draw() {-->
+        <!--data = new google.visualization.DataTable();-->
+        <!--data.addColumn('string', 'Label');-->
+        <!--data.addColumn('number', 'Value');-->
+        <!--data.addColumn('string', 'Link');-->
+        <!--data.addRows(3);-->
+        <!--data.setValue(0, 0, 'First Term');-->
+        <!--data.setValue(0, 1, 10);-->
+        <!--data.setValue(1, 0, 'Second');-->
+        <!--data.setValue(1, 1, 30);-->
+        <!--data.setValue(1, 2, 'http://www.google.com');-->
+        <!--data.setValue(2, 0, 'Third');-->
+        <!--data.setValue(2, 1, 20);-->
+        <!--var outputDiv = document.getElementById('cloud');-->
+        <!--var tc = new TermCloud(outputDiv);-->
+        <!--tc.draw(data, null);-->
+    <!--</script>-->
+
+
+    <script type="text/javascript">
+        jQuery(document).ready(function ($) {
+            $('#tabs').tab();
+            $('.train').on('change', function() {
+                console.log ("gonna change   "+ this.name + " : "+this.value ); // or $(this).val()
+                $('#retrain').val($('#retrain').val() + this.name + ":"+this.value + ",");
+            });
+        });
+    </script>
+
+
+    <!--link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"-->
+{% endblock %}
+{% block body %}
+
+    <div class="container">
+        <h2 class="brand pull-left">Report:"{{ query_name }}"</h2>
+         <a data-toggle="modal" href="/query/delete/{{ query_id }}" class="btn btn-primary pull-right"><i class="fa fa-trash-o"></i> Delete</a>
+    </div>
+
+    <div class="container">
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs">
+        <li><a href="#query" data-toggle="tab">Parameters</a></li>
+        <li class="active"><a href="#messages" data-toggle="tab">Messages</a></li>
+        <li><a href="#graphs" data-toggle="tab">Sentiments</a></li>
+        <li><a href="#categories" data-toggle="tab">Categories Analysis</a></li>
+        <li><a href="#gallery" data-toggle="tab">Photo Gallery</a></li>
+    </ul>
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div class="tab-pane" id="query">
+            <div class="cform">
+                <form action="" class="cform-form">
+                {% for parameters in query %}
+                    <div class="row">
+                        <div class="span4"></div>
+                        <div class="span1">
+                                        <label>{{ parameters.category }}: </label>
+                                    </div>
+                        <div class="span3"> <span class="text-left">
+                                        <textarea type="text"
+                                               title="properties" disabled>{{ parameters.properties }}</textarea>
+                                    </span></div>
+                        <div class="span4"></div>
+                    </div>
+                {% endfor %}
+                </form>
+            </div>
+        </div>
+        <div class="tab-pane active" id="messages">
+            <!-- Textual Results -->
+            <div class="tab-responsive">
+                    <table id="datatable">
+                        <thead class="nav"></thead>
+                        <tbody></tbody>
+                        <tfoot></tfoot>
+                    </table>
+                    <!-- the retrain form goes here-->
+                    <div class="span12">
+                        <div class="cform" id="theme-form">
+                            <form action="/results-update" method="post" class="cform-form">
+                                {% csrf_token %}
+                                <input id="results-id" type="hidden" name="results-id" value="{{ query_id }}">
+                                <input id="retrain" type="hidden" name="retrain">
+                                <input id="update" type="submit" value='Save' class="cform-submit pull-left">
+                            </form>
+                        </div>
+                    </div>
+            </div>
+            <!-- /.container -->
+        </div>
+        <div class="tab-pane" id="graphs" style="height: 1200px">
+            <!-- Graphs -->
+            <div class="tab-responsive" style="height: 100%; width: 100%;">
+                <!-- row: pie for sentiments and blocks for terms-->
+                    <!-- row: treemap for sentiments and blocks for terms-->
+                <div class="row">
+                    <div class="span6">
+                        <div id="chart_div" style="width: 100%; height:auto">Loading...</div>
+                        <div>*left-click on a category to see keywords, right-click to navigate back</div>
+                    </div>
+                    <div class="span4">
+                        <div id="piechart" style="width: 100%; height: auto;">Loading...</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <br/>
+                </div>
+                <div class="row">
+                    <div id="visualization" style="width: 100%; height: 300px;">Loading....</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane" id="categories">
+            <div class="container">
+                <!-- row: Tabs for categories-->
+                <div class="row">
+                    <div class="span9">
+                        <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+                            {% for category in categories %}
+                                {% if forloop.counter == 1 %}
+                                    <li class="active"><a href="#{{ category.category }}" data-toggle="tab">{{ category.category }}</a></li>
+                                {% else %}
+                                    <li><a href="#{{ category.category }}" data-toggle="tab">{{ category.category }}</a></li>
+                                {% endif %}
+                                {% empty %}
+                            {% endfor %}
+                        </ul>
+                        <div id="my-tab-content" class="tab-content" style="width: auto">
+                            {% for category in categories %}
+                                {% if forloop.counter == 1 %}
+                                    <div class="tab-pane active" id="{{ category.category }}">
+                                {% else %}
+                                    <div class="tab-pane" id="{{ category.category }}">
+                                {% endif %}
+                                        <div class="row">
+                                                <div id="pie_{{ category.category }}" style="width: 100%; height: auto;">Loading...</div>
+                                        </div>
+                                        <div class="row">
+                                                <div id="chart_{{ category.category }}" style="width: 90%; height:400px;">Loading...</div>
+                                        </div>
+                                         <script type="text/javascript">
+                                            google.load("visualization", "1", {packages: ["corechart"]});
+                                            google.setOnLoadCallback(drawChart);
+                                            google.setOnLoadCallback(drawChartWrap);
+                                            function drawChart() {
+                                                var data = google.visualization.arrayToDataTable([
+                                                ['Messages', 'Number'],
+                                                {% for property in category.properties %}
+                                                    ['{{ property.name }}' , {{ property.times }}],
+                                                {% endfor %}
+                                                ]);
+                                                var options = {
+												    title: 'Trending Keywords',
+                                                    width: 800,
+                                                    height: 500,
+                                                    backgroundColor: 'none',
+                                                    is3D: true
+                                                };
+                                            var chart = new google.visualization.PieChart(document.getElementById('pie_{{ category.category }}'));
+                                            chart.draw(data, options);
+                                            };
+
+                                            function drawChartWrap() {
+                                                  // Create and populate the data table.
+                                                  var data = google.visualization.arrayToDataTable([
+                                                    ['Property', 'Positive', 'Negative', 'Neutral'],
+                                                    {% for property in category.properties %}
+                                                    ['{{ property.name }}' , {{ property.positive }},{{ property.negative }},{{ property.neutral }}],
+                                                    {% endfor %}
+                                                  ]);
+
+                                                  var options = {
+                                                      colors: [ '#A5DF00', '#FA8258', '#BDBDBD'],
+                                                      title: 'Sentiments per category in detail',
+                                                      backgroundColor: {fill:'transparent'},
+                                                      width: 800,
+                                                      height: 500,
+                                                      hAxis: {title: 'Categories', titleTextStyle: {color: 'black'}}
+                                                    };
+
+                                                    var chart = new google.visualization.ColumnChart(document.getElementById('chart_{{ category.category }}'));
+                                                    chart.draw(data, options);
+
+                                              }
+                                          </script>
+                                     </div>
+                                {% empty %}
+                            {% endfor %}
+
+                        </div>
+                        <!-- /. row-->
+                    </div>
+                </div>
+            </div><!-- /.container -->
+        </div>
+        <div class="tab-pane" id="gallery">
+            <!-- Image Gallery-->
+            <div id="links" style="height: 500px">
+                {% for message in response %}
+                    {% for media in message.doc.entities.media %}
+                        <a href="{{ media.media_url_https }}" title="{{ message.doc.senti_tag }} @{{ message.doc.user_screen_name }} : {{ message.doc.text|linebreaksbr }}" data-gallery>
+                            <img src="{{ media.media_url_https }}" alt="{{ message.doc.user_screen_name }}" class="crop">
+                        </a>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+            <div id="blueimp-gallery" class="blueimp-gallery">
+            <!-- The container for the modal slides -->
+            <div class="slides"></div>
+            <!-- Controls for the borderless lightbox -->
+            <h3 class="title"></h3>
+            <a class="prev">‹</a>
+            <a class="next">›</a>
+            <a class="close">?</a>
+            <a class="play-pause"></a>
+            <ol class="indicator"></ol>
+            <!-- The modal dialog, which will be used to wrap the lightbox content -->
+            <div class="modal fade">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title"></h4>
+                        </div>
+                        <div class="modal-body next"></div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn pull-left prev">
+                                <i class="fa fa-arrow-left"></i>
+                                Previous
+                            </button>
+                            <button type="button" class="btn next pull-right">
+                                Next
+                                <i class="fa fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+     </div>
+
+
+
+
+</div>
+
+    </div>
+
+{% endblock %}
+{% block end_of_body %}
+    <script src="http://blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
+    <script src="/s/js/bootstrap-image-gallery.min.js"></script>
+    <link rel="stylesheet" href="http://blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
+    <link rel="stylesheet" href="/s/css/bootstrap-image-gallery.min.css">
+{% endblock %}
+

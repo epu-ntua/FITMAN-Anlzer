@@ -1,0 +1,8 @@
+create database anlzerSettingsDB;
+CREATE USER 'anlzeruser'@'localhost' IDENTIFIED BY 'testpasswordfi';
+GRANT ALL PRIVILEGES ON anlzerSettingsDB.* TO 'anlzeruser'@'localhost' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+use anlzerSettingsDB;
+create table facebook_accounts( project_id varchar(70) not null primary key, keywords mediumtext);
+create table twitter_accounts( project_id varchar(70) not null primary key, keywords mediumtext);
+create table twitter_keywords( project_id varchar(70) not null primary key, keywords mediumtext);
