@@ -1,0 +1,8 @@
+Changes from version 1.00.00
+-----------------------------
+
+Remove interaction with UDA GE
+Provide better information and error messages during project setup, report creation and system training
+Check when backend services are not working properly and inform user when he tries to access them
+Create user roles with different permissions on project settings
+Bug fixes
