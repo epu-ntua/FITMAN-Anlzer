@@ -29,6 +29,8 @@ import re
 from collections import Counter
 import requests
 from .utils import user_is_allowed_to_change_the_project
+from training.train_english import train_en
+from training.train_spanish import train_sp
 
 
 def findWholeWord(w):
@@ -567,6 +569,7 @@ def results_delete(request, query_id):
     return HttpResponseRedirect("/dashboard")  # Redirect after update to the page
 
 
+# TODO:something never works properly here
 def results_update(request):
     print "Entering results_update"
     if request.method != 'POST':  # If the form has not been submitted...
@@ -576,7 +579,6 @@ def results_update(request):
     req = urllib2.Request("http://localhost:8000/user_based_sentiment?sentiment_values=%s" % str(update_bulk))
     resp = urllib2.urlopen(req)
     print resp
-    print "#####$$$$$$$$##########"
     response = resp.read()
     print "stored: %s" %response
     ## delete cashing from results, to get the updated ones from "results" methods
@@ -598,35 +600,28 @@ def results_update(request):
 def search(request):
     return render_to_response("free-search.html", {"kibana": configurations.kibana_path})
 
-
 def train(request):
     if not request.user.is_authenticated():
         return HttpResponseRedirect("/dashboard")  # Redirect after POST
     if request.method == 'POST':  # If the form has been submitted...
-        #must handle .csv
         lan = request.POST.get("lan", "")
-        csv = request.FILES.get("file", "")
         file = request.FILES['file']
-        if lan == "es":
-            train_path = configurations.sentiment_training_path + "_es"
-        else:
-            train_path = configurations.sentiment_training_path
         if file.content_type == 'text/csv':
-            req = urllib2.Request(train_path)
-            req.add_header('-T', file)
-            try:
-                resp = urllib2.urlopen(req)
-                messages.add_message(request, messages.INFO, 'System training was completed successfully.')
-                print resp
-            except urllib2.HTTPError, e:
-                print e.code
-                messages.add_message(request, messages.ERROR, 'The training service is unavailable. Please try again later or contact the system administrator. Error code #1.')
-            except urllib2.URLError, e:
-                print e.args
-                messages.add_message(request, messages.ERROR, 'The training service is unavailable. Please try again later or contact the system administrator. Error code #2.')
-            return HttpResponseRedirect("/training")  # no need to change page
+            if lan == "es":
+                try:
+                    train_sp(file,configurations.es_model)
+                    messages.add_message(request, messages.INFO, 'System training was completed successfully.')
+                except Exception,e:
+                    messages.add_message(request, messages.ERROR, 'The training service is unavailable. Please try again later or contact the system administrator. Error code #1.')
+            else:
+                try:
+                    train_en(file,configurations.en_model)
+                    messages.add_message(request, messages.INFO, 'System training was completed successfully.')
+                except Exception,e:
+                    messages.add_message(request, messages.ERROR, 'The training service is unavailable. Please try again later or contact the system administrator. Error code #2.')
+            return HttpResponseRedirect("/training")  # Redirect after POST
         else:
-            #print "not valid file"
+            messages.add_message(request, messages.ERROR, 'Invalid file type. Only text/csv is accepted.')
             return HttpResponseRedirect("/training")  #
 
     else:

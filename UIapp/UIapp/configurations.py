@@ -20,3 +20,7 @@ sentiment_training_path = rapidanalytics_path+'sentimentTrain'
 kibana_path='http://'+server_ip+':9200/_plugin/kibana/index.html#/dashboard/elasticsearch/'
 twitter_connector = rapidanalytics_path
 facebook_connector = rapidanalytics_path
+
+#svm model files
+en_model = '/home/fitman/Downloads/anlzerVM/updates/training_english/models/model_english.pkl'
+es_model = '/home/fitman/Downloads/anlzerVM/updates/training_spanish/models/model_spanish.pkl'
