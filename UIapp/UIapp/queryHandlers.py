@@ -1,7 +1,7 @@
-from models import Category, Team, Project, Category_value, Query, Query_properties, Results,Query_languages
+from models import Category, Project, Query, Query_properties,Query_languages
 from django.utils import timezone
 from dateutil import parser
-import urllib2,urllib
+import urllib2
 import configurations
 import json
 
@@ -82,7 +82,6 @@ def get_query_properties(query):
     keywords={}
     phrases={}
     properties = {}
-    twitter_usernames = {}
     result={}
     result["Twitter"]=[]
     result["Facebook"]=[]
@@ -90,8 +89,6 @@ def get_query_properties(query):
             if str((query_property.properties).encode('utf-8')) is "":
                 continue
             else:
-                #if (query_property.category.name=='Twitter'): #if there are usernames for twitter, apart from the text to be queried, the usernames are extracted
-                #    twitter_usernames.append(str(query_property.properties))
                 phrases[str(query_property.category.name)]=[]
                 properties[str(query_property.category.name)] = str((query_property.properties).encode('utf-8'))
                 param_list=str(query_property.properties.encode('utf-8')).split(',')
@@ -123,43 +120,43 @@ def parse_query_for_sentiments(query):
     response = json.loads(response)["hits"]["hits"]
     return response
 
-def update_twitter_connector(username, project, twitter_properties):
-    twitter_properties='storeTWaccounts?id=%s_%s&keywords=%s'%(urllib.quote(str(username)),urllib.quote(str(project)), urllib.quote(twitter_properties))
-    #print twitter_properties
-    path="%s%s" %(configurations.twitter_connector,twitter_properties)
-    try:
-        response = urllib2.urlopen(path) ## response = urllib2.urlopen('http://google.com',timeout = 0.001)
-    except urllib2.URLError as err:
-        print('error connecting on twitter settings')
-        return 0
-        # urllib2.URLError: <urlopen error timed out>
-    #response = response.read()
-    #print response
-    return 1
+# def update_twitter_connector(username, project, twitter_properties):
+#     twitter_properties='storeTWaccounts?id=%s_%s&keywords=%s'%(urllib.quote(str(username)),urllib.quote(str(project)), urllib.quote(twitter_properties))
+#     #print twitter_properties
+#     path="%s%s" %(configurations.twitter_connector,twitter_properties)
+#     try:
+#         response = urllib2.urlopen(path) ## response = urllib2.urlopen('http://google.com',timeout = 0.001)
+#     except urllib2.URLError as err:
+#         print('error connecting on twitter settings')
+#         return 0
+#         # urllib2.URLError: <urlopen error timed out>
+#     #response = response.read()
+#     #print response
+#     return 1
 
-def update_project_connector(username, project, project_properties):
-    project_properties='storeKeywords?id=%s_%s&keywords=%s'%(urllib.quote(str(username)),urllib.quote(str(project)), urllib.quote(project_properties))
-    #print twitter_properties
-    path="%s%s" %(configurations.twitter_connector,project_properties)
-    try:
-        response = urllib2.urlopen(path)
-    except urllib2.URLError as err:
-        print('error connecting on Keywords settings')
-        return 0
-    #response = response.read()
-    #print response
-    return 1
+# def update_project_connector(username, project, project_properties):
+#     project_properties='storeKeywords?id=%s_%s&keywords=%s'%(urllib.quote(str(username)),urllib.quote(str(project)), urllib.quote(project_properties))
+#     #print twitter_properties
+#     path="%s%s" %(configurations.twitter_connector,project_properties)
+#     try:
+#         response = urllib2.urlopen(path)
+#     except urllib2.URLError as err:
+#         print('error connecting on Keywords settings')
+#         return 0
+#     #response = response.read()
+#     #print response
+#     return 1
 
-def update_facebook_connector(username, project, facebook_properties):
-    facebook_properties='storeFBaccounts?id=%s_%s&keywords=%s'%(urllib.quote(str(username)),urllib.quote(str(project)), urllib.quote(facebook_properties))
-    #print facebook_properties
-    path="%s%s" %(configurations.facebook_connector,facebook_properties)
-    try:
-        response = urllib2.urlopen(path)
-    except urllib2.URLError as err:
-        print('error connecting on Facebook settings')
-        return 0
-    return 1
+# def update_facebook_connector(username, project, facebook_properties):
+#     facebook_properties='storeFBaccounts?id=%s_%s&keywords=%s'%(urllib.quote(str(username)),urllib.quote(str(project)), urllib.quote(facebook_properties))
+#     #print facebook_properties
+#     path="%s%s" %(configurations.facebook_connector,facebook_properties)
+#     try:
+#         response = urllib2.urlopen(path)
+#     except urllib2.URLError as err:
+#         print('error connecting on Facebook settings')
+#         return 0
+#     return 1
 
 def remove_comma_at_the_end (expression):
     if len(expression) > 0:

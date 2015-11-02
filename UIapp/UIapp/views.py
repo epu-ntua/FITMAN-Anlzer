@@ -1,7 +1,5 @@
 from django.contrib import messages
 from django.template import RequestContext
-import urllib2, urllib
-import json
 import datetime
 import time
 from queryHandlers import *
@@ -10,7 +8,6 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.http import Http404
 from django.contrib.auth.models import Group, User
-from django.core.context_processors import csrf
 from django.contrib.auth import authenticate, logout, login
 from django.contrib.auth.models import User
 from initialiaze_repo import initialize
@@ -19,12 +16,6 @@ from models import Category, Team, Project, Category_value, Query, Query_propert
 from updateSentimentKeys import multiple_values_update
 import csv
 import configurations
-from django.contrib.auth.forms import AuthenticationForm, PasswordResetForm, SetPasswordForm, PasswordChangeForm
-from django.contrib.auth.tokens import default_token_generator
-# from django.shortcuts import resolve_url
-from django.core.urlresolvers import reverse, resolve
-from django.template.response import TemplateResponse
-#from django.contrib.auth.views import password_reset
 import re
 from collections import Counter
 import requests
@@ -195,17 +186,17 @@ def welcome_categories(request):
 
         # setup project on twitter keyword connector
         error_message = "no"
-        if not update_project_connector(username, project, twitter_properties):
-            error_message = "Error connecting to database. Project settings were not stored. Please contact the system administrator. Error code #3."
-            messages.add_message(request, messages.ERROR, error_message)
-        # setup project on twitter acount connector
-        if not update_twitter_connector(username,project,twitter):
-            error_message = "Error connecting to database. Project settings were not stored. Please contact the system administrator. Error code #4."
-            messages.add_message(request, messages.ERROR, error_message)
-        # setup project on fb connector
-        if not update_facebook_connector(username, project, facebook_properties):
-            error_message = "Error connecting to database. Project settings were not stored. Please contact the system administrator. Error code #5."
-            messages.add_message(request, messages.ERROR, error_message)
+        # if not update_project_connector(username, project, twitter_properties):
+        #     error_message = "Error connecting to database. Project settings were not stored. Please contact the system administrator. Error code #3."
+        #     messages.add_message(request, messages.ERROR, error_message)
+        # # setup project on twitter acount connector
+        # if not update_twitter_connector(username,project,twitter):
+        #     error_message = "Error connecting to database. Project settings were not stored. Please contact the system administrator. Error code #4."
+        #     messages.add_message(request, messages.ERROR, error_message)
+        # # setup project on fb connector
+        # if not update_facebook_connector(username, project, facebook_properties):
+        #     error_message = "Error connecting to database. Project settings were not stored. Please contact the system administrator. Error code #5."
+        #     messages.add_message(request, messages.ERROR, error_message)
 
         if error_message == "no":
             return HttpResponseRedirect("/welcome-train")
@@ -696,16 +687,16 @@ def settings(request):
             twitter_properties = twitter
             keyword_properties = keywords+","+twitter
             #update twitter connector
-            if not update_project_connector(project.owned_by.name, project.name, keyword_properties):
-                error_message = "Error connecting to database. Project settings were not stored. Please contact the system administrator. Error code #6."
-                messages.add_message(request, messages.ERROR, error_message)
-            if not update_twitter_connector(project.owned_by.name, project.name, twitter_properties):
-                error_message = "Error connecting to database. Project settings were not stored. Please contact the system administrator. Error code #7."
-                messages.add_message(request, messages.ERROR, error_message)
-            #update facebook connector
-            if not update_facebook_connector(project.owned_by.name, project.name, facebook):
-                error_message = "Error connecting to database. Project settings were not stored. Please contact the system administrator. Error code #8."
-                messages.add_message(request, messages.ERROR, error_message)
+            # if not update_project_connector(project.owned_by.name, project.name, keyword_properties):
+            #     error_message = "Error connecting to database. Project settings were not stored. Please contact the system administrator. Error code #6."
+            #     messages.add_message(request, messages.ERROR, error_message)
+            # if not update_twitter_connector(project.owned_by.name, project.name, twitter_properties):
+            #     error_message = "Error connecting to database. Project settings were not stored. Please contact the system administrator. Error code #7."
+            #     messages.add_message(request, messages.ERROR, error_message)
+            # #update facebook connector
+            # if not update_facebook_connector(project.owned_by.name, project.name, facebook):
+            #     error_message = "Error connecting to database. Project settings were not stored. Please contact the system administrator. Error code #8."
+            #     messages.add_message(request, messages.ERROR, error_message)
 
             return render(request, "settings.html",
                           {"keywords": keywords, "twitter": twitter, "facebook": facebook},context_instance=RequestContext(request))
