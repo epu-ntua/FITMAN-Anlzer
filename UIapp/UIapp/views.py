@@ -223,27 +223,9 @@ def welcome_train(request):
         return HttpResponseRedirect("/")  # Redirect to initial screen
 
     if request.method == 'POST':  # If the form has been submitted...
-        #must handle .csv
-        csv = request.FILES.get("file", "")
-        file = request.FILES['file']
-        if file.content_type == 'text/csv':
-            req = urllib2.Request(configurations.sentiment_training_path)
-            req.add_header('-T', file)
-            try:
-                resp = urllib2.urlopen(req)
-                messages.add_message(request, messages.INFO, 'System training was completed successfully.')
-                #print resp
-            except urllib2.HTTPError, e:
-                #print e.code
-                messages.add_message(request, messages.ERROR, 'The training service is unavailable. Please try again later or contact the system administrator. Error code #1.')
-            except urllib2.URLError, e:
-                #print e.args
-                messages.add_message(request, messages.ERROR, 'The training service is unavailable. Please try again later or contact the system administrator. Error code #2.')
-            return HttpResponseRedirect("/welcome-train")  # no need to change page
-            #return HttpResponseRedirect("/welcome-report")  # Redirect after POST
-        else:
-            #print "not valid file"
-            return HttpResponseRedirect("/welcome-train")  #
+        #remove training functionality so early in the process...
+        messages.add_message(request, messages.ERROR, 'System training is now performed only through the main menu, after project configuration has successfully been completed.')
+        return HttpResponseRedirect("/welcome-train")  #
 
     else:
         return render(request, 'welcome_train.html',context_instance=RequestContext(request))
