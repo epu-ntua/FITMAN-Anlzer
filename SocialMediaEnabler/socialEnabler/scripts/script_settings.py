@@ -7,23 +7,17 @@ access_token_secret = ""
 #facebook app
 fb_access_token = ""
 
-#mysql configuration
-mysql_host="localhost"
-mysql_user="anlzeruser"
-mysql_passwd="testpasswordfi"
-mysql_db="anlzerSettingsDB"
-mysql_project = ""
-
 #couchbase configuration
 cb_server = "localhost"
 couchbase_port = 8091
-cb_admin_username = ""
-cb_admin_password = ""
-cb_twitter_bucket = ""
-cb_facebook_bucket = ""
+cb_admin_username = "Administrator"
+cb_admin_password = "anlzer"
+cb_twitter_bucket = "anlzer"
+cb_facebook_bucket = "anlzer"
 
-#rapidanalytics path
-rapidanalytics_path = 'http://localhost:8081/RA/public_process/'
+#path for sentiment queue, i.e. to store temp files until they are given a sentiment tag - this directory will be created if it does not exist
+sentimentQ = '/home/anlzer/Downloads/'
 
-#path for sentiment queue
-sentimentQ = '/home/user/Downloads/'
+#svm model directories - these directories will be created during system training, if they don't exits already. If system training is not performed and dirs are not created, scripts WILL FAIL
+en_model = '/home/anlzer/sentiment/training_english/models/' #english
+es_model = '/home/anlzer/sentiment/training_spanish/models/' #spanish

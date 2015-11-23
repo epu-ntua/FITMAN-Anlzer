@@ -5,7 +5,7 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    ('Michael', 'mpetyx@epu.ntua.gr'),
+    ('Michael', ''),
 )
 
 ROOT_PATH = os.path.abspath(os.path.dirname(__file__ + '/../../UIapp/'))
@@ -131,7 +131,7 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    os.path.join(ROOT_PATH, 'templates')
+    os.path.join(ROOT_PATH, 'templates'),
 )
 
 # All-Auth Settings
@@ -140,36 +140,45 @@ ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 7
 ACCOUNT_USERNAME_MIN_LENGTH = 4
 
 EMAIL_USE_TLS = True
-EMAIL_HOST = ''
+EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = ''
 EMAIL_HOST_PASSWORD = ''
 
-INSTALLED_APPS = (
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.sites',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'django.contrib.admin',
-    # 'django.contrib.admindocs',
-    'UIapp',
-    # 'password_reset'
+INSTALLED_APPS = ['django.contrib.auth',
+                  'django.contrib.contenttypes',
+                  'django.contrib.sessions',
+                  'django.contrib.sites',
+                  'django.contrib.messages',
+                  'django.contrib.staticfiles',
+                  'django.contrib.admin',
+                  # 'django.contrib.admindocs',
+                  'UIapp',
+                  'user_management',
+                  'api',
+                  # 'password_reset'
 
-    'allauth',
-    'allauth.account',
-    # 'allauth.socialaccount',
-    # ... include the providers you want to enable:
-    # 'allauth.socialaccount.providers.facebook',
-    'user_management',
-)
+                  'allauth',
+                  'allauth.account',
+                  'rest_framework',
+                  # 'allauth.socialaccount',
+                  # ... include the providers you want to enable:
+                  # 'allauth.socialaccount.providers.facebook',
+                  ]
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error when DEBUG=False.
 # See http://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+        # 'rest_framework.renderers.BrowsableAPIRenderer',
+    )
+}
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,

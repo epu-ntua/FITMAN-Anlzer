@@ -34,7 +34,13 @@ class Query_propertiesAdmin(admin.ModelAdmin):
     pass
 
 
-admin.site.register(Query_properties, ResultsAdmin)
+admin.site.register(Query_properties, Query_propertiesAdmin)
+
+class Query_languagesAdmin(admin.ModelAdmin):
+    pass
+
+
+admin.site.register(Query_languages, Query_languagesAdmin)
 
 class TeamAdmin(admin.ModelAdmin):
     pass

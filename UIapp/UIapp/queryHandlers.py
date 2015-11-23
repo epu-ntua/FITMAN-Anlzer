@@ -1,14 +1,15 @@
-from models import Category, Project, Query, Query_properties,Query_languages
+from models import Category, Project,  Query, Query_properties, Query_languages, User
 from django.utils import timezone
 from dateutil import parser
-import urllib2
+import urllib2,urllib
 import configurations
 import json
+from datetime import datetime
 
 # create a query
 def run_query (request):
     user = request.user
-    project = Project.objects.get(created_by=user)
+    project = Project.objects.get(created_by=user.id)
     query_name = request.POST.get("query_name", "")
     from_date = request.POST.get("datepicker_from", "")
     to_date = request.POST.get("datepicker_to", "")
@@ -133,7 +134,7 @@ def parse_query_for_sentiments(query):
 #     #response = response.read()
 #     #print response
 #     return 1
-
+#
 # def update_project_connector(username, project, project_properties):
 #     project_properties='storeKeywords?id=%s_%s&keywords=%s'%(urllib.quote(str(username)),urllib.quote(str(project)), urllib.quote(project_properties))
 #     #print twitter_properties
@@ -146,7 +147,7 @@ def parse_query_for_sentiments(query):
 #     #response = response.read()
 #     #print response
 #     return 1
-
+#
 # def update_facebook_connector(username, project, facebook_properties):
 #     facebook_properties='storeFBaccounts?id=%s_%s&keywords=%s'%(urllib.quote(str(username)),urllib.quote(str(project)), urllib.quote(facebook_properties))
 #     #print facebook_properties
@@ -169,3 +170,75 @@ def remove_plus_in_the_beginning (expression):
         if expression[:1] == "+":
             expression = expression[1:]
     return expression
+
+# create a query
+def run_query_through_api (request, project_id):
+    user = request.user
+    # TODO fix this
+    user = User.objects.get(id=1)
+    project = Project.objects.get(id=project_id)
+    query_name = request.POST.get("query_name", "")
+    from_date = request.POST.get("datepicker_from", "")
+    to_date = request.POST.get("datepicker_to", "")
+    language = request.POST.get("lan", "")
+    query = Query(name=query_name, venn=request.POST.get("query_logic", ""), from_date=datetime.strptime(from_date, "%d/%m/%Y"), to_date=datetime.strptime(to_date, "%d/%m/%Y"),
+                  created=timezone.now(), created_by=user, owned_by=project)
+    query.save()
+    keywords = request.POST.get("keywords", "")
+    category = Category.objects.get(name="Keywords")
+    query_property = Query_properties(query=query, category=category, properties=keywords)
+    query_property.save()
+    twitter = request.POST.get("twitter", "")
+    category = Category.objects.get(name="Twitter")
+    query_property = Query_properties(query=query, category=category, properties=twitter)
+    query_property.save()
+    facebook = request.POST.get("facebook", "")
+    category = Category.objects.get(name="Facebook")
+    query_property = Query_properties(query=query, category=category, properties=facebook)
+    query_property.save()
+    brands = request.POST.get("brands", "")
+    try:
+        category = Category.objects.filter(name="brands")
+    except ValueError:
+        print ValueError.message
+    if category.__len__(): #exists already the category
+        category = category[0]
+    ## otherwise create the category
+    else:
+        #print "is empty"
+        category = Category(name="brands")
+        category.save()
+    query_property = Query_properties(query=query, category=category, properties=brands)
+    query_property.save()
+    query_lan=Query_languages(query=query,language=language)
+    query_lan.save()
+
+    ##handle dynamic properties
+    i = 0;
+    prop_value = "prop-value-%s" % i
+    prop_name = "prop-name-%s" % i
+    while request.POST.get(prop_value, ""):
+        property_name = request.POST.get(prop_name, "")
+        property_value = request.POST.get(prop_value, "")
+        try:
+            ## try to find if the category already exists - in lowercase
+            category = Category.objects.filter(name=(str(property_name).lower()))
+        except ValueError:
+            #print ValueError.message
+            continue
+
+        if category.__len__(): #exists already the category
+            category = category[0]
+        ## otherwise create the category
+        else:
+            category = Category(name=str(property_name).lower())
+            category.save()
+            ## end store the properties in the category
+        query_property = Query_properties(query=query, category=category, properties=property_value)
+        query_property.save()
+
+        i += 1
+        prop_value = "prop-value-%s" % i
+        prop_name = "prop-name-%s" % i
+
+    return query.id

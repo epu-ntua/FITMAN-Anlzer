@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import Group,User
+from django.contrib.auth.models import User
 
 #Every user has a team
 class Team(models.Model):
@@ -16,7 +16,7 @@ class Team(models.Model):
 class Project(models.Model):
     name = models.CharField(max_length=255, blank=False)
     created_by = models.ForeignKey(User, blank=False)
-    owned_by = models.ForeignKey(Team, blank=False)
+    owned_by = models.ForeignKey(Team, null=True, blank=False)
     created = models.DateTimeField(auto_now_add=True)
     class Admin:
         pass
@@ -52,11 +52,12 @@ class Query(models.Model):
     name = models.TextField(max_length=255, null=True, blank=True)
     venn = models.CharField(max_length=5, default="OR", blank=False, )
     #query = models.TextField(null=True, blank=True)  # JSON query
-    from_date = models.DateTimeField()
-    to_date = models.DateTimeField()
+    from_date = models.DateTimeField(null=True, blank=True)
+    to_date = models.DateTimeField(null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(User, blank=False)
     owned_by= models.ForeignKey(Project, blank=False)
+
     class Admin:
         pass
 
@@ -78,7 +79,7 @@ class Query_languages(models.Model):
     def __unicode__(self):
         return "%s : %s" % (self.query, self.language)
 
-# cash results to improve system performance and require refresh for update
+# cache results to improve system performance and require refresh for update
 class Results(models.Model):
     query = models.ForeignKey(Query, blank=False)
     results = models.TextField(null=True, blank=True)  # JSON result

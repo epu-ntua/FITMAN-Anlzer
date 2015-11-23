@@ -1,0 +1,1 @@
+heroku config:add BUILDPACK_URL=git://github.com/mpetyx/heroku-buildpack-couchbase-geo-django.git

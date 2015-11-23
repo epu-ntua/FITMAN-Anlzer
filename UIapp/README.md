@@ -1,4 +1,4 @@
-------------
+ï»¿------------
 Introduction
 ------------
 
@@ -15,7 +15,7 @@ As with all systems of this type, an administrator is expected to perform some l
 Workflow
 -----------------
 
-The Unstructured and Social Data Analytics SE provides a web interface to allow for users’ interaction. The workflow that applies from an interface perspective when a user interacts with the U-SDA SE is depicted in Figure 3.
+The Unstructured and Social Data Analytics SE provides a web interface to allow for users interaction. The workflow that applies from an interface perspective when a user interacts with the U-SDA SE is depicted in Figure 3.
  
  ![alt tag](../screenshots/workflow.PNG)
 Figure 3: User interaction workflow
@@ -28,12 +28,14 @@ When a user accesses the FITMAN-Anlzer Specific Enabler, he views the welcome pa
  
  ![alt tag](../screenshots/1.png)
 Figure 4: Welcome page
+
+> The _first_ project that will be created in Anlzer is considered to be the master project, i.e. this is the project that controls the data retrieval settings. After creating the first project, contact your system admin in order to start the data retrieval processes. 	
 	
 When a user signs up in the FITMAN-Anlzer, initially he has to setup his user profile information. He thus chooses his credentials (username and password) and provides his email as depicted in Figure 5.
  ![alt tag](../screenshots/2.png)
 Figure 5: User sign-up
 
-As soon as the registration is completed, the user may create a “project” in the FITMAN-Anlzer according to his needs and preferences. At the moment, only one project per account is allowed. The user chooses a project name and indicates what information he is interested to track from the web: Twitter accounts, Facebook pages, Keywords and Hashtags. (Figure 6).
+As soon as the registration is completed, the user may create a project in FITMAN-Anlzer according to his needs and preferences. At the moment, only one project per account is allowed. The user chooses a project name and indicates what information he is interested to track from the web: Twitter accounts, Facebook pages, Keywords and Hashtags. (Figure 6).
 
 Note that after creating and configuring a project, the system administrator should be contacted in order to start the procedures that collect data from social media. This is to prevent unauthorized accesses that could lead to system errors and performance issues.
 
@@ -41,19 +43,19 @@ Note that after creating and configuring a project, the system administrator sho
  ![alt tag](../screenshots/3.png)
 Figure 6: Project set-up
 
-Then, a user visits his central project page where all the created reports are stored (i.e. structured reports on existing data that have been collected in the back-end based on the project’s settings and in which the user is interested to navigate). When visiting the FITMAN-Anlzer for the first time, the user views Figure 7, otherwise he navigates to Figure 8 where he can manage a set of already created reports, search for specific terms or order them according to their name, keywords, accounts, etc. By clicking on a report name, the user may view its settings and results.
+Then, a user visits his central project page where all the created reports are stored (i.e. structured reports on existing data that have been collected in the back-end based on the project's settings and in which the user is interested to navigate). When visiting the FITMAN-Anlzer for the first time, the user views Figure 7, otherwise he navigates to Figure 8 where he can manage a set of already created reports, search for specific terms or order them according to their name, keywords, accounts, etc. By clicking on a report name, the user may view its settings and results.
 
 ------------------
-Anlzer’s main menu
+Anlzer's main menu
 ------------------
 
 On the top menu, the following options are provided to the user:
-•	Project Setup, used to modify the connectors’ and project’s settings.
-•	Training, through which he can train the Sentiment Analysis Engine for his project purposes.
-•	Free Search, that allows him to have a glimpse of all data real-time (without requesting any particular structured query).
-•	About, used to access further information regarding the FITMAN-Anlzer
-•	Contact, which brings up a contact form to provide feedback to the SE owner.
-•	Logout, which is used to log out of the service.
+*	Project Setup, used to modify the connectors' and project's settings.
+*	Training, through which he can train the Sentiment Analysis Engine for his project purposes.
+*	Free Search, that allows him to have a glimpse of all data real-time (without requesting any particular structured query).
+*	About, used to access further information regarding the FITMAN-Anlzer
+*	Contact, which brings up a contact form to provide feedback to the SE owner.
+*	Logout, which is used to log out of the service.
 
  ![alt tag](../screenshots/4.png)
 Figure 7: Reports Overview (1st time)
@@ -62,17 +64,19 @@ Figure 7: Reports Overview (1st time)
 Figure 8: Reports Overview
 
 
----------------------------------------
+-------------------------------------------------
 Training the Sentiment Analysis System
 ---------------------------------------
 
 After the creation of a new project in the FITMAN-Anlzer, it is recommended to train the Sentiment Analysis Engine in Figure 9 through two alternative ways:
 
-•	The user may download a .csv file that contains initial data collected in the Processing / Querying Engine, assign to each phrase the sentiment he considers appropriate, and then upload again the updated file.
-•	The user may upload a .csv following the instructed format under the “File Upload” area.
+*	The user may download a .csv file that contains initial data collected in the Processing / Querying Engine, assign to each phrase the sentiment he considers appropriate, and then upload again the updated file.
+*	The user may upload a .csv following the instructed format under the *File Upload* area.
 
 The results will propagate after a while to the Processing / Querying Engine as well as to the Trend & Sentiment Analysis Engine.
 Please note that for every chosen language, a different training file is required.
+
+> After performing the first system training, you may contact your system administrator in order to start the sentiment analysis engine. By default, the engine is not started when Anlzer is installed, since it needs a sentiment model to exist in order to be applied to the retrieved documents.
 
 ![alt tag](../screenshots/6.png) 
 Figure 9: System Training
@@ -81,11 +85,11 @@ Figure 9: System Training
 Creating a new Report
 ---------------------
 
-In the home screen of FITMAN-Anlzer (Figure 7, Figure 8), the user has the potential to “create a report” by clicking on the corresponding button, thus creating a new report on existing data in Figure 10.
+In the home screen of FITMAN-Anlzer (Figure 7, Figure 8), the user has the potential to *create a report* by clicking on the corresponding button, thus creating a new report on existing data in Figure 10.
 
 By creating a report, the user provides a name to the report, designates specific keywords and accounts he is interested to track. Finally, he has to choose the time period over which the FITMAN-Anlzer will conduct the analysis of the collected data.
 
-The FITMAN-Anlzer allows the user to customize the reports according to his needs through the “Add Properties” functionality that permits him to add new categories the values of which will be used to filter and organize the results (e.g. category name “colors” with properties “red, black, white”, or category name “countries” with properties “Greece, Spain, UK”).
+The FITMAN-Anlzer allows the user to customize the reports according to his needs through the *Add Properties* functionality that permits him to add new categories the values of which will be used to filter and organize the results (e.g. category name "colors" with properties "red, black, white", or category name "countries" with properties "Greece, Spain, UK").
 All such properties in a report help the user to group and visualize the collected data in a more concrete and substantial way.
 
 
@@ -99,7 +103,7 @@ Navigating inside a report
 
 When a user creates a report, he is able to navigate to the report results that include:
 
-1.	The Sentiment Analysis dashboard (Figure 11) where all the messages (that fulfill the query preconditions) are presented along with a sentiment tag (Positive, Negative, Neutral). The user may filter them by specific terms, or even change the sentiment to re-train the Trend & Sentiment Analysis Engine and make it more accurate to his industry. By clicking on the “save” button the changes will be stored in the Processing Engine, thus propagating the changes in the sentiment tags.
+1.	The Sentiment Analysis dashboard (Figure 11) where all the messages (that fulfill the query preconditions) are presented along with a sentiment tag (Positive, Negative, Neutral). The user may filter them by specific terms, or even change the sentiment to re-train the Trend & Sentiment Analysis Engine and make it more accurate to his industry. By clicking on the save button the changes will be stored in the Processing Engine, thus propagating the changes in the sentiment tags.
 
 
 ![alt tag](../screenshots/8.png) 
@@ -132,7 +136,7 @@ Figure 14: Trending Photo Gallery
 Free Search inside FITMAN-Anlzer
 ---------------------------------
 
-In order to exploit the FITMAN-Anlzer in the most efficient and productive way, it is essential to find the proper terms in order to create reports. In order to facilitate this procedure for the user, a “free search” functionality is offered which allows him to see a real-time visual representation of the collected data, where new terms can be unveiled. In Figure 15, a user can add new terms to investigate and view their frequency. Such data can be available almost real-time, as soon as they are tracked from the connectors, stored and processed.
+In order to exploit the FITMAN-Anlzer in the most efficient and productive way, it is essential to find the proper terms in order to create reports. In order to facilitate this procedure for the user, a "free search" functionality is offered which allows him to see a real-time visual representation of the collected data, where new terms can be unveiled. In Figure 15, a user can add new terms to investigate and view their frequency. Such data can be available almost real-time, as soon as they are tracked from the connectors, stored and processed.
 Nevertheless, the changes made on this screen are not stored, as its intended use is to provide an interface to explore and recognize uncommon and un-thought patterns. If a user needs a more clear view of the results, he needs to go back to the home page (Figure 7, Figure 8) and create new reports, with the terms he is interested to track and monitor.
 
 ![alt tag](../screenshots/kibanaCombo.png) 
@@ -144,7 +148,7 @@ Error messages
 
 While using Anlzer, it is possible that you will encounter problems with the previously described workflow. This section shows some basic error messages the system may print on your screen, as well as the problem these error messages probably indicate and the way to overcome it.
 
-Most of the error messages are intended to guide you through the Anlzer’s procedures and therefore are self-explanatory. The errors presented here are system errors for which you cannot directly do something to overcome. They are presented here so that you are ready to identify them, should you ever need to, in order to contact the system administrator.
+Most of the error messages are intended to guide you through the Anlzer's procedures and therefore are self-explanatory. The errors presented here are system errors for which you cannot directly do something to overcome. They are presented here so that you are ready to identify them, should you ever need to, in order to contact the system administrator.
 
 1.	Updating project settings
 a.	Not enough privileges error
@@ -153,14 +157,7 @@ When trying to update your project settings you may see the following screen:
  ![alt tag](../screenshots/error_privileges.PNG) 
 Figure 16: Permission error on system settings
 
-This means you do not have permission to change the underlying project settings. By default, all new users are only given the rights to create reports and view the results. You need to contact your system administrator and ask that you become “stuff member” in this project in order to have elevated rights.
-
-b.	Database connection error
-If you have the privileges to change the project settings, you may encounter the following screen:
- 
- ![alt tag](../screenshots/error_save_settings.PNG) 
-Figure 17: Database error on system settings
-Each of these three error messages indicates that some part of the project settings (Twitter accounts, Facebook pages, hashtags) could not be saved due to some problem with the database connection. Most commonly you will see all three messages printed together, as this is indicative of a more general  database problem.
+This means you do not have permission to change the underlying project settings. By default, all new users are only given the rights to create reports and view the results. You need to contact your system administrator and ask that you become stuff member in this project in order to have elevated rights.
 
 
 2.	Training the sentiment analysis component
@@ -169,5 +166,5 @@ Sentiment analysis on the collected data is performed using Support Vector Machi
  ![alt tag](../screenshots/error_training.PNG) 
 Figure 18: Error on system training
 
-This error is most likely caused when Rapidanalytics server is not working or cannot be reached. You should contact your system administrator in order to fix this.
+This error indicates a problem with the training file or the sentiment analysis engine running in the background. You should contact your system administrator in order to resolve this issue.
 

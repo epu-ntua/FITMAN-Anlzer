@@ -1,7 +1,15 @@
 python-dateutil
-Django==1.6
+django==1.8.1
 dj-static
 static
 wsgiref
 couchbase
 django-allauth
+celery
+djangorestframework
+markdown
+django-filter
+selenium
+tweepy
+nltk
+facepy

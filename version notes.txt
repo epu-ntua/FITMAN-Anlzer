@@ -1,4 +1,4 @@
-Changes from version 1.00.00
+Changes in version 1.01.00
 -----------------------------
 
 Remove interaction with UDA GE
@@ -6,3 +6,11 @@ Provide better information and error messages during project setup, report creat
 Check when backend services are not working properly and inform user when he tries to access them
 Create user roles with different permissions on project settings
 Bug fixes
+
+
+Changes in version 2.00.00
+----------------------------
+
+Expose main Anlzer functionalities as Restful API
+Remove Rapidminer and Rapidanalytics
+Implement text processing and sentiment analysis methods using NLTK and SciKit 

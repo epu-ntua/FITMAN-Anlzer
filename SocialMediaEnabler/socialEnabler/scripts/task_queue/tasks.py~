@@ -1,0 +1,27 @@
+__author__ = 'mpetyx'
+
+from celery import Celery
+# from couchbase import Couchbase
+# import script_settings
+
+#app = Celery()
+app = Celery('tasks', backend='rpc://', broker='amqp://guest@localhost:5672//')
+# server = script_settings.cb_server
+# port = script_settings.couchbase_port
+# admin_username = script_settings.cb_admin_username
+# admin_password = script_settings.cb_admin_password
+# bucket = script_settings.cb_twitter_bucket
+
+
+@app.task
+def save_on_couchbase(message):
+    # cbucket = Couchbase.connect(host=server, port=port, bucket=bucket, password=admin_password)
+    print "saved whatever had to in Couchbase"
+    print message
+    return "Hello: "+message 
+
+
+@app.task
+def process_values(message):
+    # run the sentiment stuff here
+    return save_on_couchbase.delay(message)

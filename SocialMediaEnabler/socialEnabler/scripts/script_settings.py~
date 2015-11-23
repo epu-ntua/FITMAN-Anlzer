@@ -1,0 +1,23 @@
+#twitter app
+consumer_key = "i3WN5OjMbC1glPpXhfBfEoQrN"
+consumer_secret = "5P7NFycipPHWlJmth3qodb8jw5CGdUSr2el6qi43NG5lmJJnjr"
+access_token_key = "1108878662-GYTgwQECsvaA1yznpJhkPmSz1aPt1f7DYmFRZCM"
+access_token_secret = "HHRv3FDuPjqAnx6Vcnoga5crsYsFjpzCrY0gHakiAbIJz"
+
+#facebook app
+fb_access_token = "CAACEdEose0cBAFwFlTsynstsDxZB1f5douC2dMxDHnsgcmMJV4EHa21ZCKmdav5S4G9tNaRGIU6WgzNFK3txmiaQWVzEt3D14dwbwrw72qVLAmCSLZBozBmIAJJFuv9TmGpgd3UZCwTJ82HdqWUmOaGaT3kwsPR7WebFvfPFe4ZA6MesMU4HnWd7PHk5kEcEjagZCfWjar8Ce0sMeJczGc"
+
+#couchbase configuration
+cb_server = "localhost"
+couchbase_port = 8091
+cb_admin_username = "Administrator"
+cb_admin_password = "anlzer"
+cb_twitter_bucket = "anlzer"
+cb_facebook_bucket = "anlzer"
+
+#path for sentiment queue, i.e. to store temp files until they are given a sentiment tag
+sentimentQ = '/home/anlzer/Downloads/'
+
+#svm model directories
+en_model = '/home/fitman/Downloads/anlzerVM/updates/training_english/models/' #english
+es_model = '/home/fitman/Downloads/anlzerVM/updates/training_spanish/models/' #spanish

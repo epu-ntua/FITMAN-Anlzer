@@ -1,4 +1,4 @@
 facepy
 couchbase
-MySQLdb
 tweepy
+nltk

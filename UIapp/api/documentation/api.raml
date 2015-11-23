@@ -1,0 +1,142 @@
+#%RAML 0.8
+baseUri: https://17b5bd7d.ngrok.io
+title: Anlzer
+version: 2.0
+
+traits:
+  - paged:
+      queryParameters:
+        pages:
+          description: The number of pages to return
+          type: number
+  - secured:  
+      description: Some requests require authentication
+      queryParameters:
+        <<methodName>>: # e.g. get:
+          description: A <<methodName>> name-value pair must be provided for this request to succeed.  # e.g. A get name-value...
+          example: <<methodName>>=h8duh3uhhu38   # e.g. get=h8duh3uhhu38
+      
+      
+/user:
+  post:
+    #is: [secured]
+    description: Create a new user
+    queryParameters:
+      username:
+        description: The username of the user 
+      first_name:
+      last_name:
+      password:
+    responses:
+        201:
+          body:
+            application/json:
+              example: | 
+                  {
+                    "success":True,
+                    "status" 201,
+                    "user":{ 
+                      "_links": {
+                        "href": "user/435"
+                      }
+                      "id":"435"
+                    }
+                  }
+  get:
+    is: [paged, secured]
+    description: Retrieve the list of available users
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include get_users_response.txt
+            
+  /{userID}:
+    uriParameters:
+      userID:
+        type: string
+        required: true
+    get:
+      description: Retrieve user specific details
+          
+/group:
+  get:
+    description: Retrieve the available groups that your have created
+  
+  /{groupID}:
+    get:
+      description: Retrieve details about a specific group
+      
+    /user:
+      get:
+      
+      /{userID}:
+        get:
+        delete:
+        post:
+        
+        /privileges:
+          description: The 
+          get:
+          patch:
+          put:
+  
+/project:
+  get:
+    is: [paged,secured]
+    description: Retrieve the list of your available projects.
+  post:
+    description: Create a new Project
+  
+  /{ProjectID}:
+    uriParameters:
+      ProjectID:
+        type: string
+        required: true
+        example: dsaj3493ds023refs129
+    delete:
+      description: Delete a specific project with all of its content
+      
+    get:
+      description: Retrieve details about a specific project
+      
+    put:
+      description: Update all project fields in one request
+      
+    patch:
+      description: Update a specific field of the project
+      
+    /train:
+      get:
+        description: Retrieve the training dataset
+      post:
+        description: Update the training corpus
+        
+      patch:
+        description: Append examples to the training dataset
+      
+      
+    /status:
+      get:
+        description: Get project current status regarding quotas
+        
+    /group:
+      get:
+        description: Retrieve the details of the project group
+      
+    /stream:
+      get:
+            
+    /report:
+      post:
+        queryParameters:
+          kindOfReport:
+            type: string
+            example: sentiment
+      get:
+      /{reportID}:
+        get:
+        delete:
+        
+        /results:
+          get:

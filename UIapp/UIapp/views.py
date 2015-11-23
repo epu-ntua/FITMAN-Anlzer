@@ -7,7 +7,7 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.http import Http404
-from django.contrib.auth.models import Group, User
+from django.contrib.auth.models import Group
 from django.contrib.auth import authenticate, logout, login
 from django.contrib.auth.models import User
 from initialiaze_repo import initialize
@@ -16,13 +16,13 @@ from models import Category, Team, Project, Category_value, Query, Query_propert
 from updateSentimentKeys import multiple_values_update
 import csv
 import configurations
+
 import re
 from collections import Counter
 import requests
 from .utils import user_is_allowed_to_change_the_project
 from training.train_english import train_en
 from training.train_spanish import train_sp
-
 
 def findWholeWord(w):
     return re.compile(r'\b({0})\b'.format(w), flags=re.IGNORECASE).search
@@ -221,7 +221,6 @@ def welcome_train(request):
     else:
         return render(request, 'welcome_train.html',context_instance=RequestContext(request))
 
-
 ## step 3
 def welcome_report(request):
     #we have now user, thus we must authenticate them before train the system to avoid attacks
@@ -355,7 +354,7 @@ def results(request, query_id):
         try:
             ## Must store the response, if there is no response, otherwise return the stored one.
             ## IF NOT STORED
-            query = Query.objects.get(id=query_id, created_by=request.user)
+            query = Query.objects.get(id=query_id)
             query_params = Query_properties.objects.filter(query=query)
             results = Results.objects.filter(query=query)
             #run for all categories
@@ -456,7 +455,7 @@ def results(request, query_id):
 
                 print query_all
                 response = parse_query_for_sentiments(query_all)
-                newResponse = Results(query=query, results=json.dumps(response), updated=datetime.datetime.now())
+                newResponse = Results(query=query, results=json.dumps(response), updated=datetime.now())
                 newResponse.save()
 
 
@@ -541,8 +540,7 @@ def results_delete(request, query_id):
     query.delete()
     return HttpResponseRedirect("/dashboard")  # Redirect after update to the page
 
-
-# TODO:something never works properly here
+#TODO:something never works properly here,resolve
 def results_update(request):
     print "Entering results_update"
     if request.method != 'POST':  # If the form has not been submitted...
@@ -572,6 +570,7 @@ def results_update(request):
 ###
 def search(request):
     return render_to_response("free-search.html", {"kibana": configurations.kibana_path})
+
 
 def train(request):
     if not request.user.is_authenticated():

@@ -7,7 +7,7 @@ It is responsible for:
 
 >1. Acquiring information based on predefined keywords and / or accounts / pages,
 2. Filtering relevant information (i.e. removing keywords and URLs),
-3. Running opinion mining and trend analysis techniques (based on Support Vector Machines) and
+3. Running opinion mining and trend analysis techniques (based on the SVM algorithm) and
 4. Presenting the emerging topics, sentiments and trends in an interactive way through intuitive visualizations 
 (i.e. dashboards, tree maps, charts, galleries)..
 
@@ -18,7 +18,7 @@ In both cases, the user is prompted to provide the necessary settings and inform
 
 The period during which data are collected may span from the past to the future according to the restrictions imposed by the social media platforms APIs and the user preferences. In general, the whole procedure of collecting data is repeated periodically, which eventually affects the system scalability capabilities; the more frequent the crawling process on data and the processing of them is, the less scalable the U-SDA SE becomes. By default, Twitter data are updated almost real time, whereas Facebook retrieval runs once a day. 
 
-Upon analyzing the gathered information for every query, Anlzer SE visualizes the topics identified from specific social media platforms and web resources, gives a trending line and also the *sentiment indicator* for every topic identified. The users may also save the queries they have executed, in order to view the results whenever needed. 
+Upon analyzing the gathered information for every query, Anlzer SE visualizes the topics identified from specific social media platforms and web resources, gives a trending line and also the *sentiment indicator* for every topic identified. The users may also save the queries they have executed, in order to view the updated results whenever needed. 
 
 -----------------
 SPECIAL THANKS
@@ -30,13 +30,8 @@ SPECIAL THANKS
 
 [Kibana] (https://www.elastic.co/products/kibana)
 
-[RapidMiner - now RapiMiner Studio] (https://rapidminer.com/products/studio/)
-
-[RapidAnalytics - now RapidMiner Server] (https://rapidminer.com/products/server/)
-
 [Django] (https://www.djangoproject.com/)
 
-[MySQL] (https://dev.mysql.com/downloads/mysql/)
 
 -----------------
 Build and Install
@@ -46,21 +41,17 @@ You can find [here](./InstallationGuide.md) a detailed guide for the installatio
  
 The following are prerequisites you need to install in order to successfully use all the functionalities: 
 
-Java (JRE 6 and JRE 7)
-Couchbase Server (Enterprise Edition 2.1.1)
-Elasticsearch (0.90.2)
-Kibana (v3.0.0)
+Java (JRE 7)
+Couchbase Server (Enterprise Edition 3.1.1)
+Elasticsearch (1.7.3)
+Kibana (v3.1.2)
 Couchbase transport plugin for Elasticsearch
-Elasticsearch Head plugin (optional)
-MySQL Server (5.6)
-Rapidminer (5.3.013)
-Rapidanalytics (CE 1.3.013)
 Python (2.7)
-Django (1.6)
+Django (1.8)
 
 The versions listed here are the ones used for the anlzer vm which you can download through [FITMAN catalogue](http://catalogue.fitman.atosresearch.eu/enablers/unstructured-and-social-data-analytics) 
-All of the above are available both for Linux and Windows. That said, Anlzer has been developed and tested under Ubuntu and this is the proposed OS for the installation.
-Should you choose to use newer versions of the required software (which is strongly advisable as new versions include bug fixes and security updates), make sure to check for possible incompatibilities. As an example, make sure there is a couchbase transport plugin for the selected Couchbase Server and Elasticsearch versions.
+All of the above are available both for Linux and Windows. That said, Anlzer has been developed and tested under Ubuntu (12.04) and this is the proposed OS for the installation.
+Should you choose to use newer versions of the required software (which is strongly advisable as new versions include bug fixes and security updates), make sure to check for possible incompatibilities. As an example, make sure there is a Couchbase transport plugin for the selected Couchbase Server and Elasticsearch versions.
 
 
 -------------
@@ -69,4 +60,3 @@ Usage Example
 
 Anlzer is a web platform. For detailed usage examples and application screenshots, please visit
 http://catalogue.fitman.atosresearch.eu/enablers/documentation
-You may also find some screenshots and getting started examples [here](./UIapp/README.md).

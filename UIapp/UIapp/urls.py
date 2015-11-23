@@ -43,6 +43,8 @@ urlpatterns = patterns('',
                        (r'^accounts/', include('allauth.urls')),
 
                        (r'^groups/', include('user_management.urls')),
+
+                       (r'^api/', include('api.urls')),
 )
 
 
