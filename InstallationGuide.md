@@ -96,7 +96,8 @@ Pay attention to the dependencies on numpy and scipy. Do not install scikit if t
 
 Anlzer is ready to be accessed from its web interface at http://localhost:8000
 From the FreeSearch menu item you can choose to load and store the provided pre-configured Kibana dashboard, unless you prefer to experiment on your own...
-You can also access Anlzer's api from http://localhost:8000/api
+You can also access Anlzer's api from http://localhost:8000/api (You can find [here](UIapp/API_Description.md) the available API calls.)
+
 Enjoy!
 
 For what to do next, look [here](UIapp/README.md) and [here](SocialMediaEnabler/socialEnabler/scripts/README.md)
