@@ -40,6 +40,7 @@ def get_Couchbase_bucket():
     return cbucket
 
 def set_accounts_from_terms(auth, tw_accounts):
+    tw_accounts = tw_accounts.replace("@","")
     inner_accounts_list = tw_accounts.split(",")
     api = tweepy.API(auth)
     results = api.lookup_users(screen_names=inner_accounts_list)
