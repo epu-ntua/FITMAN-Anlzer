@@ -1,4 +1,5 @@
 import json
+import urllib2
 
 from django.http import HttpResponse
 from django.contrib.auth.models import User, Group
@@ -274,3 +275,23 @@ def project_report_results(request, project_id, report_id):
 
     else:
         return HttpResponse(status=405, content_type='application/json')
+
+    # per week results for number of tweets made in a specific PREDEFINED!!! time period regarding a specific topic (topic from list of preexisting topics that are based on hashtags)
+
+#TODO fix this
+def histogram_report(request, project_id):
+    if request.method == 'GET':
+        topic = request.GET.get('topic','')
+        if (topic == "api") or (topic == "apis"):
+            topic_query_part = "\"doc.entities.hashtags.text:apis OR doc.entities.hashtags.text:api\""
+        else:
+            topic_query_part = "\"doc.entities.hashtags.text:"+topic+"\""
+        query = '{ "facets": { "20": { "date_histogram": { "field": "doc.created_at", "interval": "1w" }, "global": true, "facet_filter": { "fquery": { "query": { "filtered": { "query": { "query_string": { "query": '+topic_query_part+' } }, "filter": { "bool": { "must": [ { "range": { "doc.created_at": { "from": 1430120737063, "to": 1436179293269 } } }, { "terms": { "_type": [ "couchbaseDocument" ] } } ], "must_not": [ { "fquery": { "query": { "query_string": { "query": "doc.entities.hashtags.text:awesomeness" } }, "_cache": true } }, { "fquery": { "query": { "query_string": { "query": "doc.entities.hashtags.text:ub40" } }, "_cache": true } } ] } } } } } } } }, "size": 0}'
+        project_settings_url = "http://localhost:9200/futurenterprise/_search?pretty"
+        response = urllib2.urlopen(project_settings_url,query)
+        response = str(response.read())
+        return HttpResponse(response,status=200, content_type='application/json')
+    else:
+        return HttpResponse(status=405, content_type='application/json')
+
+
