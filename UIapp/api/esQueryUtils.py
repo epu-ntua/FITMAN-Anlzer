@@ -34,7 +34,7 @@ def build_facet_query(topics,accounts,from_timestamp,until_timestamp):
     query_end = " },\"size\": 0}"
     query=query_start
     for topic in topics:
-        query+=get_topic_facet(topic,topic,from_timestamp,until_timestamp)
+        query+=get_topic_facet(topic,from_timestamp,until_timestamp)
         for account in accounts:
             query+=get_main_facet(topic,account,from_timestamp,until_timestamp)
     query = query[:-1] #just remove last comma
