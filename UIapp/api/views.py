@@ -15,6 +15,7 @@ from results import paged_results
 # from django.shortcuts import resolve_url
 # from django.contrib.auth.views import password_reset
 from django.views.decorators.csrf import csrf_exempt
+from esQueryUtils import build_facet_query
 
 
 
@@ -287,6 +288,22 @@ def histogram_report(request, project_id):
         else:
             topic_query_part = "\"doc.entities.hashtags.text:"+topic+"\""
         query = '{ "facets": { "20": { "date_histogram": { "field": "doc.created_at", "interval": "1w" }, "global": true, "facet_filter": { "fquery": { "query": { "filtered": { "query": { "query_string": { "query": '+topic_query_part+' } }, "filter": { "bool": { "must": [ { "range": { "doc.created_at": { "from": 1430120737063, "to": 1436179293269 } } }, { "terms": { "_type": [ "couchbaseDocument" ] } } ], "must_not": [ { "fquery": { "query": { "query_string": { "query": "doc.entities.hashtags.text:awesomeness" } }, "_cache": true } }, { "fquery": { "query": { "query_string": { "query": "doc.entities.hashtags.text:ub40" } }, "_cache": true } } ] } } } } } } } }, "size": 0}'
+        project_settings_url = "http://localhost:9200/futurenterprise/_search?pretty"
+        response = urllib2.urlopen(project_settings_url,query)
+        response = str(response.read())
+        return HttpResponse(response,status=200, content_type='application/json')
+    else:
+        return HttpResponse(status=405, content_type='application/json')
+
+#psy bd
+#TODO point to correct ES index
+def histogram_daily_report_per_topic_per_influencer(request, project_id):
+    if request.method == 'GET':
+        topics = request.GET.get('topics','')
+        accounts = request.GET.get('accounts','')
+        from_timestamp = request.GET.get('from_timestamp','')
+        until_timestamp = request.GET.get('until_timestamp','')
+        query = build_facet_query(topics,accounts,from_timestamp,until_timestamp)
         project_settings_url = "http://localhost:9200/futurenterprise/_search?pretty"
         response = urllib2.urlopen(project_settings_url,query)
         response = str(response.read())
