@@ -297,10 +297,11 @@ def histogram_report(request, project_id):
 
 #psy bd
 #TODO point to correct ES index
+# I answer to requests like the following /api/project/1/report/dailyhistogram?topics=raspberry,iot&accounts=iotattack&from_timestamp=1430784000000&until_timestamp=1431388800000
 def histogram_daily_report_per_topic_per_influencer(request, project_id):
     if request.method == 'GET':
-        topics = request.GET.get('topics','')
-        accounts = request.GET.get('accounts','')
+        topics = request.GET.get('topics','').split(",")
+        accounts = request.GET.get('accounts','').split(",")
         from_timestamp = request.GET.get('from_timestamp','')
         until_timestamp = request.GET.get('until_timestamp','')
         query = build_facet_query(topics,accounts,from_timestamp,until_timestamp)
