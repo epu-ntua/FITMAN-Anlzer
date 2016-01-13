@@ -735,9 +735,9 @@ def user_based_sentiment(request):
                     lista.append({'key': res[0], 'value': res[1]})
             result = multiple_values_update(lista)
 
-            return HttpResponse(status=200, mimetype='application/json')
+            return HttpResponse(status=200, content_type='application/json')
         else:
-            return HttpResponse(status=204, mimetype='application/json')
+            return HttpResponse(status=204, content_type='application/json')
 
     else:
         return HttpResponse(status=405)
