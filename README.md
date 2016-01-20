@@ -42,7 +42,7 @@ You can find [here](./InstallationGuide.md) a detailed guide for the installatio
 The following are prerequisites you need to install in order to successfully use all the functionalities: 
 
 Java (JRE 7)
-Couchbase Server (Enterprise Edition 3.1.1)
+Couchbase Server (Community Edition 3.0.1)
 Elasticsearch (1.7.3)
 Kibana (v3.1.2)
 Couchbase transport plugin for Elasticsearch
