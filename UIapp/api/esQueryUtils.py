@@ -41,3 +41,11 @@ def build_facet_query(topics,accounts,from_timestamp,until_timestamp):
     query+=query_end
     return  query
 
+def build_popular_hashtags_query(size):
+    query = "{ \"facets\": { \"terms\": { \"terms\": { \"field\": \"doc.entities.hashtags.text\"," \
+            " \"size\": "+ size + ", \"order\": \"count\" }, " \
+            "\"facet_filter\": { \"fquery\": { \"query\": { \"filtered\": " \
+            "{ \"query\": { \"bool\": { \"should\": [ { \"query_string\": { \"query\": \"*\" } } ] } }, " \
+            "\"filter\": { \"bool\": { \"must\": [ { \"terms\": { \"_type\": [ \"couchbaseDocument\" ] } } ] } } } } } } } }, \"size\": 0 }"
+    return query
+

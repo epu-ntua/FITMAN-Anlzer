@@ -15,7 +15,7 @@ from results import paged_results
 # from django.shortcuts import resolve_url
 # from django.contrib.auth.views import password_reset
 from django.views.decorators.csrf import csrf_exempt
-from esQueryUtils import build_facet_query
+from esQueryUtils import build_facet_query, build_popular_hashtags_query
 
 
 
@@ -305,6 +305,24 @@ def histogram_daily_report_per_topic_per_influencer(request, project_id):
         from_timestamp = request.GET.get('from_timestamp','')
         until_timestamp = request.GET.get('until_timestamp','')
         query = build_facet_query(topics,accounts,from_timestamp,until_timestamp)
+        project_settings_url = "http://localhost:9200/futurenterprise/_search?pretty"
+        response = urllib2.urlopen(project_settings_url,query)
+        response = str(response.read())
+        return HttpResponse(response,status=200, content_type='application/json')
+    else:
+        return HttpResponse(status=405, content_type='application/json')
+
+#psy bd
+#TODO point to correct ES index
+# I answer to requests like the following /api/project/1/report/popular_hashtags?size=100
+def most_popular_hashtags(request, project_id):
+    if request.method == 'GET':
+        size = request.GET.get('size','')
+        try:
+            size = int(size)
+        except:
+            return HttpResponse(status=400, content_type='application/json')
+        query = build_popular_hashtags_query(size)
         project_settings_url = "http://localhost:9200/futurenterprise/_search?pretty"
         response = urllib2.urlopen(project_settings_url,query)
         response = str(response.read())
